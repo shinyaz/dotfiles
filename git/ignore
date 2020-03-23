@@ -1,0 +1,9 @@
+# OS: Mac
+.DS_Store
+
+# OS: Windows
+Thumbs.db
+
+# APP: Vim
+*~
+*.swp

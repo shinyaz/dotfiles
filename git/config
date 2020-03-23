@@ -1,0 +1,16 @@
+[core]
+	editor       = vim
+	excludesfile = ~/.config/git/ignore
+[user]
+	name  = Shinya Tahara
+	email = shinya@inside.dev
+[color]
+	ui          = auto
+	status      = auto
+	diff        = auto
+	branch      = auto
+	interactive = auto
+	grep        = auto
+[ghq]
+    root = ~/Developments/src
+

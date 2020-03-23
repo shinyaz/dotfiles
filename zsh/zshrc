@@ -1,0 +1,73 @@
+# locale
+export LANGUAGE=en_US.UTF-8
+export LANG=${LANGUAGE}
+export LC_ALL=${LANGUAGE}
+export LC_TYPE=${LANGUAGE}
+
+# history
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}"/zsh/history
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt share_history
+setopt hist_no_store
+setopt hist_reduce_blanks
+setopt hist_verify
+
+# zplug
+export ZPLUG_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/zplug
+source $ZPLUG_HOME/init.zsh
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-autosuggestions", defer:2
+zplug "yous/lime"
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+zplug load
+
+# Vim
+export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
+export DEIN_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/dein
+
+# fzf
+export FZF_CONF="${XDG_CONFIG_HOME:-$HOME/.config}"/fzf
+[ -f "${FZF_CONF}"/fzf.zsh ] && source "${FZF_CONF}"/fzf.zsh
+
+function fzf-src() {
+  local src=$(ghq list | fzf --height ${FZF_TMUX_HEIGHT:-40%} --reverse )
+  zle reset-prompt
+  if [ -n "$src" ]; then
+    BUFFER="cd $(ghq root)/$src"
+    zle accept-line
+  fi
+  zle -R -c
+}
+zle -N fzf-src
+bindkey '^]' fzf-src
+
+# anyenv
+export ANYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv
+export PATH="$ANYENV_ROOT/bin:$PATH"
+[ -e "$ANYENV_ROOT"/bin/anyenv ]  && eval "$(anyenv init -)"
+
+# Go
+export GOPATH=$HOME/Developments
+export PATH=$GOROOT/bin:$PATH
+export PATH=$PATH:$GOPATH/bin
+
+# Starship
+[ -e /usr/local/bin/starship ] && eval "$(starship init zsh)"
+
+# Kubernetes: krew
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+# Kubernetes: helm
+[ -e /usr/local/bin/helm ]  && source <(helm completion zsh)
+
+# Kubernetes: Istio
+export PATH="$PATH:$HOME/Deployments/istio-1.5.0/bin"
