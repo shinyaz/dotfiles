@@ -19,8 +19,8 @@ else
   colorflag='-G'
 fi
 
-alias ls='ls -F   ${colorflag}'
-alias ll='ls -lF  ${colorflag}'
+alias ls='ls -F ${colorflag}'
+alias ll='ls -lF ${colorflag}'
 alias la='ls -lFa ${colorflag}'
 
 alias grep='grep --color=auto'
