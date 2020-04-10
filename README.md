@@ -86,6 +86,7 @@ $FZF_HOME/install --bin
 
 # copy config files
 export FZF_CONF="${XDG_CONFIG_HOME:-$HOME/.config}"/fzf
+mkdir -p $FZF_CONF
 cp $DOTFILES/fzf/fzf.zsh  $FZF_CONF/fzf.zsh
 cp $DOTFILES/fzf/fzf.bash $FZF_CONF/fzf.bash
 ```
@@ -98,10 +99,17 @@ export ANYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv
 git clone https://github.com/anyenv/anyenv $ANYENV_ROOT
 $ANYENV_ROOT/bin/anyenv init
 exec $SHELL -l
+anyenv install init
 
 # Option: install **env
 anyenv install goenv # for example
 exec $SHELL -l
 goenv install 1.14.0 # for example
 goenv global  1.14.0 # for example
+```
+
+### ghq
+
+```sh
+go get github.com/x-motemen/ghq
 ```
