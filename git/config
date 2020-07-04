@@ -3,7 +3,7 @@
 	excludesfile = ~/.config/git/ignore
 [user]
 	name  = Shinya Tahara
-	email = shinya@inside.dev
+	email = midnight326@gmail.com
 [color]
 	ui          = auto
 	status      = auto
