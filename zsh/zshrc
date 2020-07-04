@@ -64,7 +64,9 @@ export PATH=$PATH:$GOPATH/bin
 [ -e /usr/local/bin/starship ] && eval "$(starship init zsh)"
 
 # Kubernetes: kubectl
-source <(kubectl completion zsh)
+if type kubectl >/dev/null 2>&1; then
+  source <(kubectl completion zsh)
+fi
 
 # Kubernetes: krew
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
