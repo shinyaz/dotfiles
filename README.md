@@ -97,19 +97,24 @@ cp $DOTFILES/fzf/fzf.bash $FZF_CONF/fzf.bash
 # install anyenv
 export ANYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv
 git clone https://github.com/anyenv/anyenv $ANYENV_ROOT
-$ANYENV_ROOT/bin/anyenv --init
+$ANYENV_ROOT/bin/anyenv init
 exec $SHELL -l
 anyenv install init
 
 # Option: install **env
 anyenv install goenv # for example
 exec $SHELL -l
-goenv install 1.14.0 # for example
-goenv global  1.14.0 # for example
+goenv install 1.14.4 # for example
+goenv global  1.14.4 # for example
 ```
 
 ### ghq
 
 ```sh
+# make a directory and logout
+mkdir $HOME/Developments
+exit
+
+# login and ghq install
 go get github.com/x-motemen/ghq
 ```
