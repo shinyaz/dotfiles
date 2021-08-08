@@ -67,3 +67,7 @@ export DENO_INSTALL="/Users/tahshiny/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 export DVM_DIR="/Users/tahshiny/.dvm"
 export PATH="$DVM_DIR/bin:$PATH"
+
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
+[ -e $HOME/.cargo/env ] && source $HOME/.cargo/env
