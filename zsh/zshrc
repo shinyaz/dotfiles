@@ -50,16 +50,6 @@ function fzf-src() {
 zle -N fzf-src
 bindkey '^]' fzf-src
 
-# anyenv
-export ANYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv
-export PATH="$ANYENV_ROOT/bin:$PATH"
-[ -e "$ANYENV_ROOT"/bin/anyenv ]  && eval "$(anyenv init -)"
-
-# Go
-export GOPATH=$HOME/Developments
-export PATH=$GOROOT/bin:$PATH
-export PATH=$PATH:$GOPATH/bin
-
 # Starship
 [ -e /usr/local/bin/starship ] && eval "$(starship init zsh)"
 
@@ -68,15 +58,12 @@ if type kubectl >/dev/null 2>&1; then
   source <(kubectl completion zsh)
 fi
 
-# Kubernetes: krew
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+# nvm - Node Version Manager
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# Kubernetes: helm
-[ -e /usr/local/bin/helm ]  && source <(helm completion zsh)
-
-# Kubernetes: Istio
-export PATH="$PATH:$HOME/Deployments/istio-1.5.0/bin"
-
-# Rust
-export PATH="$HOME/.cargo/bin:$PATH"
-[ -e $HOME/.cargo/env ] && source $HOME/.cargo/env
+# dvm - Deno Version Manager
+export DENO_INSTALL="/Users/tahshiny/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+export DVM_DIR="/Users/tahshiny/.dvm"
+export PATH="$DVM_DIR/bin:$PATH"
