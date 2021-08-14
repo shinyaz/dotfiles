@@ -59,13 +59,13 @@ if type kubectl >/dev/null 2>&1; then
 fi
 
 # nvm - Node Version Manager
-export NVM_DIR="$HOME/.config/nvm"
+export NVM_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"/nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 # dvm - Deno Version Manager
-export DENO_INSTALL="/Users/tahshiny/.deno"
+export DENO_INSTALL="${XDG_DATA_HOME:-$HOME/.local/share}"/deno
 export PATH="$DENO_INSTALL/bin:$PATH"
-export DVM_DIR="/Users/tahshiny/.dvm"
+export DVM_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/dvm"
 export PATH="$DVM_DIR/bin:$PATH"
 
 # Rust
