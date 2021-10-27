@@ -91,21 +91,15 @@ cp $DOTFILES/fzf/fzf.zsh  $FZF_CONF/fzf.zsh
 cp $DOTFILES/fzf/fzf.bash $FZF_CONF/fzf.bash
 ```
 
-### anyenv
+### Homebrew
 
 ```sh
-# install anyenv
-export ANYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv
-git clone https://github.com/anyenv/anyenv $ANYENV_ROOT
-$ANYENV_ROOT/bin/anyenv init
-exec $SHELL -l
-anyenv install init
+# install homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Option: install **env
-anyenv install goenv # for example
-exec $SHELL -l
-goenv install 1.14.4 # for example
-goenv global  1.14.4 # for example
+# install applications
+brew install starship
+brew install fzf
 ```
 
 ### ghq
@@ -113,8 +107,7 @@ goenv global  1.14.4 # for example
 ```sh
 # make a directory and logout
 mkdir $HOME/Developments
-exit
 
 # login and ghq install
-go get github.com/x-motemen/ghq
+brew install ghq
 ```
