@@ -99,7 +99,6 @@ cp $DOTFILES/fzf/fzf.bash $FZF_CONF/fzf.bash
 
 # install applications
 brew install starship
-brew install fzf
 ```
 
 ### ghq
