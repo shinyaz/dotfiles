@@ -48,26 +48,6 @@ git clone https://github.com/zplug/zplug $ZPLUG_HOME
 exec $SHELL -l
 ```
 
-### Vim
-
-```sh
-# create VIM_CONF
-export VIM_CONF="${XDG_CONFIG_HOME:-$HOME/.config}"/vim
-mkdir -p $VIM_CONF
-
-# copy config files
-cp $DOTFILES/vim/vimrc $VIM_CONF/vimrc
-
-# install dein.vim
-export DEIN_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/dein
-curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-sh ./installer.sh $DEIN_HOME
-rm ./installer.sh
-
-vim
-:call dein#install()
-```
-
 ### Git
 
 ```sh
@@ -99,7 +79,7 @@ cp $DOTFILES/fzf/fzf.bash $FZF_CONF/fzf.bash
 
 # install fonts and applications
 brew tap homebrew/cask-fonts
-brew install --cask font-jetbrains-mono
+brew install --cask font-fira-code-nerd-font
 brew install starship
 ```
 
@@ -111,4 +91,24 @@ mkdir $HOME/Developments
 
 # login and ghq install
 brew install ghq
+```
+
+### Vim
+
+```sh
+# create VIM_CONF
+export VIM_CONF="${XDG_CONFIG_HOME:-$HOME/.config}"/vim
+mkdir -p $VIM_CONF
+
+# copy config files
+cp $DOTFILES/vim/vimrc $VIM_CONF/vimrc
+
+# install dein.vim
+export DEIN_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/dein
+curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+sh ./installer.sh $DEIN_HOME
+rm ./installer.sh
+
+vim
+:call dein#install()
 ```

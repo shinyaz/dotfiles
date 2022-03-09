@@ -54,7 +54,7 @@ bindkey '^]' fzf-src
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Starship
-[ -e /usr/local/bin/starship ] && eval "$(starship init zsh)"
+[ -e /opt/homebrew/bin/starship ] && eval "$(starship init zsh)"
 
 # Kubernetes: kubectl
 if type kubectl >/dev/null 2>&1; then
