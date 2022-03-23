@@ -56,21 +56,6 @@ cp $DOTFILES/git/config $XDG_CONFIG_HOME/git/config
 cp $DOTFILES/git/ignore $XDG_CONFIG_HOME/git/ignore
 ```
 
-### fzf
-
-```sh
-# install fzf
-export FZF_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git $FZF_HOME
-$FZF_HOME/install --bin
-
-# copy config files
-export FZF_CONF="${XDG_CONFIG_HOME:-$HOME/.config}"/fzf
-mkdir -p $FZF_CONF
-cp $DOTFILES/fzf/fzf.zsh  $FZF_CONF/fzf.zsh
-cp $DOTFILES/fzf/fzf.bash $FZF_CONF/fzf.bash
-```
-
 ### Homebrew
 
 ```sh
@@ -91,6 +76,17 @@ mkdir $HOME/Developments
 
 # login and ghq install
 brew install ghq
+```
+
+### fzf
+
+```sh
+# install fzf
+brew install fzf
+
+# To install useful key bindings and fuzzy completion:
+$(brew --prefix)/opt/fzf/install
+
 ```
 
 ### Vim
