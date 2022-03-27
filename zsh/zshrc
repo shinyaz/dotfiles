@@ -34,6 +34,20 @@ zplug load
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 export DEIN_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/dein
 
+# Homebrew
+if [ "$(uname)" = "Linux" ]; then
+  HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+elif [ "$(uname -m)" = "arm64" ]; then
+  HOMEBREW_PREFIX="/opt/homebrew"
+else
+  HOMEBREW_PREFIX="/usr/local"
+fi
+
+[ -x "${HOMEBREW_PREFIX}"/bin/brew ] && eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
+
+# Starship
+[ -x "${HOMEBREW_PREFIX}"/bin/starship ] && eval "$(starship init zsh)"
+
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -48,15 +62,3 @@ function fzf-src() {
 }
 zle -N fzf-src
 bindkey '^]' fzf-src
-
-# Homebrew
-if [ "$(uname -m)" = "arm64" ]; then
-  HOMEBREW_PREFIX="/opt/homebrew"
-else
-  HOMEBREW_PREFIX="/usr/local"
-fi
-
-[ -x "${HOMEBREW_PREFIX}"/bin/brew ] && eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
-
-# Starship
-[ -x "${HOMEBREW_PREFIX}"/bin/starship ] && eval "$(starship init zsh)"
