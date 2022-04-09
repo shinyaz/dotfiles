@@ -30,10 +30,6 @@ if ! zplug check --verbose; then
 fi
 zplug load
 
-# Vim
-export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
-export DEIN_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/dein
-
 # Homebrew
 if [ "$(uname)" = "Linux" ]; then
   HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"

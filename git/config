@@ -4,6 +4,10 @@
 [user]
 	name  = Shinya Tahara
 	email = shinya@fastmail.com
+[init]
+	defaultBranch = main
+[pull]
+	rebase = false
 [color]
 	ui          = auto
 	status      = auto
@@ -12,5 +16,5 @@
 	interactive = auto
 	grep        = auto
 [ghq]
-    root = ~/Developments/src
+	root = ~/Developments/src
 

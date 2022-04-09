@@ -1,0 +1,6 @@
+brew 'starship'
+brew 'fzf'
+brew 'ghq'
+
+tap 'homebrew/cask-fonts'
+cask 'font-fira-code-nerd-font'
