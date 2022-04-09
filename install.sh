@@ -21,6 +21,7 @@ mkdir -p ${XDG_DATA_HOME}
 ###
 # Install dependencies
 ###
+./bin/dotfiles install pkg
 ./bin/dotfiles install zsh
 ./bin/dotfiles install git
 ./bin/dotfiles install brew

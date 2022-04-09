@@ -12,7 +12,7 @@ fi
 
 if [ ! -e ${HOMEBREW_PREFIX} ]; then
   printf "\n🚀 Installing the brew package manager\n"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null
 fi
 eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
 

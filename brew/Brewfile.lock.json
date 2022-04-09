@@ -153,8 +153,8 @@
       "Ubuntu 20.04.3 LTS (focal)": {
         "HOMEBREW_VERSION": "3.4.5",
         "HOMEBREW_PREFIX": "/home/linuxbrew/.linuxbrew",
-        "Homebrew/linuxbrew-core": "2940e900476b4452c8047c75dcbfc193c6f30341",
-        "GCC": ""
+        "Homebrew/linuxbrew-core": "86dfd1c86bafdfc8d5d9d834b6899814fa67f0a7",
+        "GCC": "9.4.0"
       }
     }
   }
