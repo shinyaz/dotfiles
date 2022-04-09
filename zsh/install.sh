@@ -4,8 +4,9 @@ set -e
 
 # create ZDOTDIR
 export ZDOTDIR=${ZDOTDIR:-$XDG_CONFIG_HOME/zsh}
-mkdir -p ${ZDOTDIR}
-mkdir -p ${XDG_DATA_HOME:-$HOME/.local/share}/zsh
+[ ! -e ${ZDOTDIR} ] && mkdir -p ${ZDOTDIR}
+[ ! -e ${XDG_DATA_HOME:-$HOME/.local/share}/zsh ] \
+ && mkdir -p ${XDG_DATA_HOME:-$HOME/.local/share}/zsh
 
 # copy config files
 cp ${DOTFILES}/zsh/zshenv   ${HOME}/.zshenv
