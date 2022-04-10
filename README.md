@@ -5,7 +5,23 @@
 - Git
 - Zsh
 
-## How to setup
+### MacOS
+
+```sh
+xcode-select --install
+```
+
+## How to setup (Using Install Script)
+
+```sh
+export DOTFILES=path/to/dotfiles
+git clone https://github.com/shinyaz/dotfiles.git $DOTFILES
+
+cd $DOTFILES
+./install.sh
+```
+
+## How to setup (Manual)
 
 ### Clone repository
 
