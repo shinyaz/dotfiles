@@ -43,11 +43,23 @@ mkdir -p $XDG_CACHE_HOME
 mkdir -p $XDG_DATA_HOME
 ```
 
+### Homebrew
+
+```sh
+# install homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# install fonts and applications
+brew install starship
+brew tap homebrew/cask-fonts
+brew install --cask font-fira-code-nerd-font
+```
+
 ### Zsh
 
 ```sh
 # create ZDOTDIR
-export ZDOTDIR=${ZDOTDIR:-$XDG_CONFIG_HOME/zsh}
+export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 mkdir -p $ZDOTDIR
 mkdir -p ${XDG_DATA_HOME:-$HOME/.local/share}/zsh
 
@@ -56,10 +68,8 @@ cp $DOTFILES/zsh/zshenv   $HOME/.zshenv
 cp $DOTFILES/zsh/zshrc    $ZDOTDIR/.zshrc
 cp $DOTFILES/zsh/zprofile $ZDOTDIR/.zprofile
 
-# install zplug
-export ZPLUG_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/zplug
-git clone https://github.com/zplug/zplug $ZPLUG_HOME
-
+# install sheldon
+brew install sheldon
 # reload shell
 exec $SHELL -l
 ```
@@ -70,18 +80,6 @@ exec $SHELL -l
 mkdir -p $XDG_CONFIG_HOME/git
 cp $DOTFILES/git/config $XDG_CONFIG_HOME/git/config
 cp $DOTFILES/git/ignore $XDG_CONFIG_HOME/git/ignore
-```
-
-### Homebrew
-
-```sh
-# install homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# install fonts and applications
-brew tap homebrew/cask-fonts
-brew install --cask font-fira-code-nerd-font
-brew install starship
 ```
 
 ### ghq
@@ -105,24 +103,4 @@ $(brew --prefix)/opt/fzf/install
 rm .bashrc
 rm .fzf.bash
 
-```
-
-### Vim
-
-```sh
-# create VIM_CONF
-export VIM_CONF="${XDG_CONFIG_HOME:-$HOME/.config}"/vim
-mkdir -p $VIM_CONF
-
-# copy config files
-cp $DOTFILES/vim/vimrc $VIM_CONF/vimrc
-
-# install dein.vim
-export DEIN_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/dein
-curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-sh ./installer.sh $DEIN_HOME
-rm ./installer.sh
-
-vim
-:call dein#install()
 ```

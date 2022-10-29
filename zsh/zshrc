@@ -15,21 +15,6 @@ setopt hist_no_store
 setopt hist_reduce_blanks
 setopt hist_verify
 
-# zplug
-export ZPLUG_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/zplug
-source $ZPLUG_HOME/init.zsh
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "zsh-users/zsh-autosuggestions", defer:2
-zplug "yous/lime"
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-zplug load
-
 # Homebrew
 if [ "$(uname)" = "Linux" ]; then
   HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
@@ -40,6 +25,9 @@ else
 fi
 
 [ -x "${HOMEBREW_PREFIX}"/bin/brew ] && eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
+
+# sheldon
+[ -x "${HOMEBREW_PREFIX}"/bin/sheldon ] && eval "$(sheldon source)"
 
 # Starship
 [ -x "${HOMEBREW_PREFIX}"/bin/starship ] && eval "$(starship init zsh)"
