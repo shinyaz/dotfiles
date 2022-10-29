@@ -70,6 +70,9 @@ cp $DOTFILES/zsh/zprofile $ZDOTDIR/.zprofile
 
 # install sheldon
 brew install sheldon
+
+cp $DOTFILES/sheldon/plugins.toml ${XDG_CONFIG_HOME:-$HOME/.config}/sheldon/plugins.toml
+
 # reload shell
 exec $SHELL -l
 ```
