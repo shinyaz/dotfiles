@@ -49,6 +49,11 @@ mkdir -p $XDG_DATA_HOME
 # install homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+# add Homebrew to PATH
+# to add Homebrew to your PATH:
+## for MacOS
+## eval "$(/opt/homebrew/bin/brew shellenv)" 
+
 # install fonts and applications
 brew install starship
 brew tap homebrew/cask-fonts
@@ -83,6 +88,17 @@ exec $SHELL -l
 mkdir -p $XDG_CONFIG_HOME/git
 cp $DOTFILES/git/config $XDG_CONFIG_HOME/git/config
 cp $DOTFILES/git/ignore $XDG_CONFIG_HOME/git/ignore
+```
+
+### SSH for 1Password (ONLY FOR MACOS USERs)
+
+```sh
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+
+cp $DOTFILES/ssh/config ~/.ssh/config
+chmod 600 ~/.ssh/config
+
 ```
 
 ### ghq

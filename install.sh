@@ -25,3 +25,4 @@ export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
 ./bin/dotfiles install zsh
 ./bin/dotfiles install git
 ./bin/dotfiles install brew
+./bin/dotfiles install ssh
