@@ -49,10 +49,11 @@ mkdir -p $XDG_DATA_HOME
 # install homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# add Homebrew to PATH
 # to add Homebrew to your PATH:
 ## for MacOS
 ## eval "$(/opt/homebrew/bin/brew shellenv)" 
+## for Linux
+## eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" 
 
 # install fonts and applications
 brew install starship
