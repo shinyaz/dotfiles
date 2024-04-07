@@ -1,6 +1,3 @@
-# CodeWhisperer pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh"
-
 # locale
 export LANGUAGE=en_US.UTF-8
 export LANG=${LANGUAGE}
@@ -32,9 +29,6 @@ fi
 # sheldon
 [ -x "${HOMEBREW_PREFIX}"/bin/sheldon ] && eval "$(sheldon source)"
 
-# Starship
-[ -x "${HOMEBREW_PREFIX}"/bin/starship ] && eval "$(starship init zsh)"
-
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -55,6 +49,3 @@ bindkey '^]' fzf-src
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 fi
-
-# CodeWhisperer post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"
