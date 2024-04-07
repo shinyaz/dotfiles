@@ -1,6 +1,7 @@
 [core]
 	editor       = vim
 	excludesfile = ~/.config/git/ignore
+	filemode     = false
 [user]
 	name  = Shinya Tahara
 	email = shinya@fastmail.com

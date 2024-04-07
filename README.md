@@ -45,10 +45,6 @@ mkdir -p $XDG_DATA_HOME
 ## for Linux
 ## eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" 
 
-# install fonts and applications
-brew install starship
-brew tap homebrew/cask-fonts
-brew install --cask font-fira-code-nerd-font
 ```
 
 ### Zsh
