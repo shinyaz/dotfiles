@@ -30,7 +30,7 @@ fi
 [ -x "${HOMEBREW_PREFIX}"/bin/sheldon ] && eval "$(sheldon source)"
 
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -x "${HOMEBREW_PREFIX}"/bin/fzf ] && eval "$(fzf --zsh)"
 
 function fzf-src() {
   local src=$(ghq list | fzf --height ${FZF_TMUX_HEIGHT:-40%} --reverse )
