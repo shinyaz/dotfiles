@@ -94,8 +94,6 @@ cp $DOTFILES/1Password/ssh/agent.toml $XDG_CONFIG_HOME/1Password/ssh/agent.toml
 ### ghq & fzf
 
 ```sh
-# make a directory and logout
-mkdir $HOME/Developments
 
 # login and ghq install
 brew install ghq
@@ -103,4 +101,10 @@ brew install ghq
 # install fzf
 brew install fzf
 
+```
+
+### Warp
+```sh
+mkdir -p ~/.warp/themes/
+cp $DOTFILES/Warp/monokai_pro.yaml ~/.warp/themes/
 ```
