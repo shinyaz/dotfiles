@@ -106,5 +106,5 @@ brew install fzf
 ### Warp
 ```sh
 mkdir -p ~/.warp/themes/
-cp $DOTFILES/Warp/monokai_pro.yaml ~/.warp/themes/
+cp $DOTFILES/Warp/themes/monokai_pro.yaml ~/.warp/themes/
 ```
