@@ -69,6 +69,12 @@ cp $DOTFILES/sheldon/plugins.toml ${XDG_CONFIG_HOME:-$HOME/.config}/sheldon/plug
 exec $SHELL -l
 ```
 
+### Ghostty
+```sh
+mkdir -p $XDG_CONFIG_HOME/ghostty
+cp $DOTFILES/ghostty/config $XDG_CONFIG_HOME/ghostty/config
+```
+
 ### Git
 
 ```sh
@@ -101,10 +107,4 @@ brew install ghq
 # install fzf
 brew install fzf
 
-```
-
-### Warp
-```sh
-mkdir -p ~/.warp/themes/
-cp $DOTFILES/Warp/themes/monokai_pro.yaml ~/.warp/themes/
 ```

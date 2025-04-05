@@ -26,6 +26,9 @@ fi
 
 [ -x "${HOMEBREW_PREFIX}"/bin/brew ] && eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
 
+# Starship
+[ -x "${HOMEBREW_PREFIX}"/bin/starship ] && eval "$(starship init zsh)"
+
 # sheldon
 [ -x "${HOMEBREW_PREFIX}"/bin/sheldon ] && eval "$(sheldon source)"
 
