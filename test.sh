@@ -42,7 +42,12 @@ check_dir() {
 check_permission() {
   local path="$1" expected="$2" name="$3"
   if [[ -e "$path" ]]; then
-    actual=$(stat -f "%OLp" "$path" 2>/dev/null || stat -c "%a" "$path" 2>/dev/null)
+    local actual
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+      actual=$(stat -f "%OLp" "$path" 2>/dev/null)
+    else
+      actual=$(stat -c "%a" "$path" 2>/dev/null)
+    fi
     if [[ "$actual" == "$expected" ]]; then
       ok "$name permissions: $expected"
     else
