@@ -6,7 +6,7 @@ macOS / Linux 両対応の dotfiles リポジトリです。
 
 ```
 .
-├── 1Password/ssh/agent.toml   # 1Password SSH Agent 設定
+├── 1password/ssh/agent.toml   # 1Password SSH Agent 設定
 ├── antidote/
 │   └── zsh_plugins.txt        # zsh プラグイン一覧 (antidote)
 ├── ghostty/config             # Ghostty ターミナル設定
@@ -36,6 +36,12 @@ macOS / Linux 両対応の dotfiles リポジトリです。
 git clone https://github.com/shinyaz/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./install.sh
+```
+
+既存ファイルを上書きする場合は `--force` オプションを付けてください:
+
+```sh
+./install.sh --force
 ```
 
 インストールスクリプトが以下を自動で行います:
@@ -76,7 +82,7 @@ exec $SHELL -l
 | `git/config` | `$XDG_CONFIG_HOME/git/config` |
 | `git/ignore` | `$XDG_CONFIG_HOME/git/ignore` |
 | `ssh/config` | `~/.ssh/config` |
-| `1Password/ssh/agent.toml` | `$XDG_CONFIG_HOME/1Password/ssh/agent.toml` |
+| `1password/ssh/agent.toml` | `$XDG_CONFIG_HOME/1password/ssh/agent.toml` |
 | `ghostty/config` | `$XDG_CONFIG_HOME/ghostty/config` |
 
 ## ライセンス

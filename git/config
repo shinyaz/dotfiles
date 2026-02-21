@@ -5,18 +5,19 @@
 [user]
 	name  = Shinya Tahara
 	email = shinya@fastmail.com
-	# signingkey = ssh-ed25519 AAAA... (1Password アプリから公開鍵をコピーして設定)
+	# signingkey = ssh-ed25519 AAAA...
+	# ↑ 1Password アプリから SSH 公開鍵をコピーして設定
 
 # =============================================================================
 # Core
 # =============================================================================
 
 [core]
-	editor       = vim
-	filemode     = false
-	autocrlf     = input
-	quotepath    = false
-	pager        = less -FRX
+	editor    = vim
+	filemode  = false
+	autocrlf  = input              # LF に統一
+	quotepath = false              # 日本語ファイル名をエスケープしない
+	pager     = less -FRX          # 短い出力はそのまま表示
 
 [init]
 	defaultBranch = main
@@ -25,41 +26,41 @@
 	ui = auto
 
 [help]
-	autocorrect = prompt
+	autocorrect = prompt           # タイポ時に修正候補を提案
 
 # =============================================================================
 # Remote Operations
 # =============================================================================
 
 [push]
-	default         = current
-	autoSetupRemote = true
-	followTags      = true
+	default         = current      # 同名のリモートブランチに push
+	autoSetupRemote = true         # 初回 push 時に自動で upstream を設定
+	followTags      = true         # push 時にタグも一緒に送る
 
 [pull]
-	rebase = true
+	rebase = true                  # pull 時に rebase（マージコミットを避ける）
 
 [fetch]
-	prune = true
+	prune = true                   # 削除済みリモートブランチを自動削除
 
 # =============================================================================
 # Diff / Merge / Rebase
 # =============================================================================
 
 [diff]
-	algorithm  = histogram
-	colorMoved = default
-	renames    = true
+	algorithm  = histogram         # より賢い diff アルゴリズム
+	colorMoved = default           # 移動した行を色分け表示
+	renames    = true              # リネーム検出を有効化
 
 [merge]
-	conflictstyle = zdiff3
+	conflictstyle = zdiff3         # コンフリクト表示に共通祖先も含める
 
 [rebase]
-	autoSquash = true
-	autoStash  = true
+	autoSquash = true              # fixup! / squash! コミットを自動並び替え
+	autoStash  = true              # rebase 前に自動 stash / 後に自動 pop
 
 [rerere]
-	enabled = true
+	enabled = true                 # コンフリクト解決を記憶して再利用
 
 # =============================================================================
 # Commit / Tag Signing (1Password SSH)
@@ -67,27 +68,27 @@
 
 [commit]
 	gpgsign = true
-	verbose = true
+	verbose = true                 # コミット時に diff を表示
 
 [tag]
 	gpgsign = true
-	sort    = -version:refname
+	sort    = -version:refname     # バージョン番号の降順で表示
 
 [gpg]
 	format = ssh
 
 [gpg "ssh"]
-	program = op-ssh-sign
+	program = op-ssh-sign          # ~/.local/bin 経由で解決
 
 # =============================================================================
 # Display
 # =============================================================================
 
 [branch]
-	sort = -committerdate
+	sort = -committerdate          # 最終コミット日時の新しい順に表示
 
 [log]
-	date = iso
+	date = iso                     # ISO 形式で日付を表示
 
 # =============================================================================
 # Aliases

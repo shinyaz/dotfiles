@@ -1,16 +1,22 @@
 # =============================================================================
-# Environment (loaded for ALL zsh processes)
+# Environment (全ての zsh プロセスで読み込まれる)
 # =============================================================================
 
-# XDG Base Directory
+# --- XDG Base Directory ---
+
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
 export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
 
-# ZDOTDIR（zsh が .zshrc を探すディレクトリ）
+# zsh が .zshrc を探すディレクトリ
 export ZDOTDIR=${ZDOTDIR:-$XDG_CONFIG_HOME/zsh}
 
-# Homebrew (macOS: /opt/homebrew, Linux: /home/linuxbrew/.linuxbrew)
+# =============================================================================
+# PATH
+# =============================================================================
+
+# --- Homebrew (macOS: /opt/homebrew, Linux: /home/linuxbrew/.linuxbrew) ---
+
 if [[ -x /opt/homebrew/bin/brew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 elif [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
@@ -20,8 +26,14 @@ fi
 # ローカルツールを最優先
 export PATH="$HOME/.local/bin:$PATH"
 
+# =============================================================================
 # 1Password SSH Agent
-# ~/.1password/agent.sock に統一（ssh/config の IdentityAgent と合わせる）
+# =============================================================================
+
+# ソケットパスを ~/.1password/agent.sock に統一（ssh/config と合わせる）
+# macOS: 実体へのシンボリックリンクを作成
+# Linux: ~/.1password/agent.sock をそのまま使用
+
 if [[ "$OSTYPE" == darwin* ]]; then
   _1p_sock=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
   _1p_sign=/Applications/1Password.app/Contents/MacOS/op-ssh-sign
@@ -32,17 +44,23 @@ if [[ "$OSTYPE" == darwin* ]]; then
 else
   _1p_sign=/opt/1Password/op-ssh-sign
 fi
+
 if [[ -S ~/.1password/agent.sock ]]; then
   export SSH_AUTH_SOCK=~/.1password/agent.sock
 fi
-# op-ssh-sign を PATH の通った場所にシンボリックリンク（git config から参照）
+
+# op-ssh-sign を ~/.local/bin に配置（git config の gpg.ssh.program から参照）
 if [[ -x "$_1p_sign" ]] && [[ ! -L "$HOME/.local/bin/op-ssh-sign" ]]; then
   mkdir -p "$HOME/.local/bin"
   ln -sf "$_1p_sign" "$HOME/.local/bin/op-ssh-sign"
 fi
+
 unset _1p_sock _1p_sign
 
+# =============================================================================
 # Claude Code
+# =============================================================================
+
 export CLAUDE_CODE_USE_BEDROCK=1
 export AWS_REGION=us-east-1
 

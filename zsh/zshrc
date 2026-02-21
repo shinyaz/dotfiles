@@ -1,8 +1,8 @@
 # =============================================================================
-# Antidote (Plugin Manager)
+# Antidote (プラグインマネージャ)
 # =============================================================================
 
-# Homebrew 経由 (macOS / Linux) またはシステムインストール
+# Homebrew 経由 (macOS / Linux) またはローカルインストール
 if [[ -f "${HOMEBREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh" ]]; then
   source "${HOMEBREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh"
 elif [[ -f "${ZDOTDIR:-$HOME}/.antidote/antidote.zsh" ]]; then
@@ -29,7 +29,6 @@ setopt HIST_IGNORE_SPACE         # スペースで始まるコマンドは履歴
 setopt HIST_REDUCE_BLANKS        # 余分な空白を削除
 setopt HIST_VERIFY               # 履歴展開後すぐに実行せず確認できるようにする
 setopt SHARE_HISTORY             # ターミナル間で履歴を共有
-setopt INC_APPEND_HISTORY        # コマンド実行時に即座に履歴に追加
 
 # =============================================================================
 # General Options
@@ -75,13 +74,13 @@ zstyle ':completion:*' cache-path ${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compcache
 # Emacs 風キーバインド（個別の bindkey より先に設定すること）
 bindkey -e
 
-# history-substring-search
+# --- history-substring-search ---
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-bindkey '^P' history-substring-search-up
-bindkey '^N' history-substring-search-down
+bindkey '^P'   history-substring-search-up
+bindkey '^N'   history-substring-search-down
 
-# Option+Left/Right で単語単位のカーソル移動（macOS Terminal / iTerm2）
+# --- 単語単位のカーソル移動 (Option+Left/Right) ---
 bindkey '^[b' backward-word
 bindkey '^[f' forward-word
 

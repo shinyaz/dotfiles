@@ -1,38 +1,43 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Claude Code (claude.ai/code) がこのリポジトリで作業する際のガイドです。
 
-## Overview
+## 概要
 
-This is a macOS-focused dotfiles repository for Zsh shell configuration and development tools. Configs are deployed via manual `cp` commands (no symlink manager or install script).
+macOS / Linux 両対応の dotfiles リポジトリ。`install.sh` で各設定ファイルを XDG 準拠のパスにコピーして配置する。
 
-## Setup
+## ディレクトリ構成
 
-All configs follow XDG Base Directory conventions. Deployment is manual — copy files from this repo to their XDG target locations as documented in README.md. There is no Makefile, install script, or symlink manager.
+各ディレクトリが1つのツールの設定に対応:
 
-## Architecture
+- `zsh/` — zshenv (環境変数), zshrc (インタラクティブシェル設定)
+- `git/` — Git グローバル設定 + グローバル ignore
+- `ssh/` — SSH クライアント設定 (1Password Agent 連携)
+- `1password/` — 1Password SSH Agent 設定
+- `antidote/` — zsh プラグイン定義
+- `ghostty/` — Ghostty ターミナル設定
+- `brew/` — Homebrew パッケージ定義
+- `.devcontainer/` — Dev Container 設定
 
-**Zsh startup chain:** `~/.zshenv` → `$ZDOTDIR/.zshrc` → `$ZDOTDIR/.zprofile`
+## Zsh 起動チェーン
 
-- `zsh/zshenv` — Sets XDG paths, detects macOS vs Linux for Homebrew, initializes Starship prompt, Sheldon plugin manager, and FZF
-- `zsh/zshrc` — History config, locale, Homebrew/Sheldon/FZF init calls, keybindings, 1Password SSH agent socket
-- `zsh/zprofile` — Editor aliases (vim), directory navigation aliases, CodeWhisperer integration
+`~/.zshenv` → `$ZDOTDIR/.zshrc`
 
-**Shell plugins** are managed by Sheldon (`sheldon/plugins.toml`): zsh-completions, zsh-autosuggestions, zsh-syntax-highlighting, all loaded via zsh-defer for faster startup.
+- `zsh/zshenv` — XDG パス, ZDOTDIR, Homebrew, 1Password SSH Agent, Claude Code 環境変数
+- `zsh/zshrc` — antidote プラグイン, 履歴, 補完, キーバインド, fzf, エイリアス, Starship
 
-**Key integrations:**
-- 1Password SSH agent for key management (macOS only, configured in `ssh/config` and `1Password/ssh/agent.toml`)
-- ghq for repository management (root: `~/Developments/src`)
-- FZF + ghq bound to `Ctrl+]` for interactive repo switching
-- Ghostty terminal with FiraCode Nerd Font and Monokai Pro theme
-- Homebrew packages defined in `brew/Brewfile`
+## 主要な連携
 
-## Directory Layout
+- 1Password SSH Agent — SSH 認証 + Git コミット署名 (macOS / Linux 自動判別)
+- antidote — zsh プラグインマネージャ (sheldon から移行済み)
+- ghq — リポジトリ管理 (root: `~/Developments/src`)
+- fzf — ファジーファインダー
+- Starship — プロンプト
+- Ghostty — ターミナル (FiraCode Nerd Font + Monokai Pro)
 
-Each top-level directory corresponds to one tool's config: `zsh/`, `git/`, `ssh/`, `sheldon/`, `ghostty/`, `brew/`, `1Password/`. The `.devcontainer/` directory provides a VS Code remote dev environment.
+## 規約
 
-## Conventions
-
-- All paths use XDG Base Directory variables (`$XDG_CONFIG_HOME`, `$XDG_CACHE_HOME`, `$XDG_DATA_HOME`)
-- Cross-platform Homebrew detection (macOS `/opt/homebrew`, Linux `/home/linuxbrew/.linuxbrew`)
-- Git user: Shinya Tahara (shinya@fastmail.com), editor: vim
+- 全パスは XDG Base Directory 変数を使用
+- macOS / Linux 両対応 (Homebrew パス自動検出, 1Password ソケットパス統一)
+- セクション区切りは `# ===...===`、サブセクションは `# ---...---`
+- コメントは日本語

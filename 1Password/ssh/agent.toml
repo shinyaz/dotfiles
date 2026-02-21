@@ -1,5 +1,7 @@
-# 1Password SSH Agent Configuration
+# =============================================================================
+# 1Password SSH Agent
 # https://developer.1password.com/docs/ssh/agent/config
+# =============================================================================
 
 [[ssh-keys]]
 vault = "開発"
