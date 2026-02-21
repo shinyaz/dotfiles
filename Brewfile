@@ -1,31 +1,31 @@
 # =============================================================================
-# Homebrew Bundle ファイル
+# Homebrew Bundle File
 # =============================================================================
-# 使い方:
-#   brew bundle              # インストール
-#   brew bundle --force      # 上書きインストール
-#   brew bundle cleanup      # Brewfile にないものをアンインストール
-#   brew bundle check        # インストール状況を確認
+# Usage:
+#   brew bundle              # Install packages
+#   brew bundle --force      # Force reinstall
+#   brew bundle cleanup      # Uninstall packages not in Brewfile
+#   brew bundle check        # Check installation status
 
 # =============================================================================
 # CLI Tools
 # =============================================================================
 
-# --- シェル関連 ---
-brew "zsh"                       # Zsh シェル
-brew "antidote"                  # Zsh プラグインマネージャ
-brew "starship"                  # クロスシェルプロンプト
+# --- Shell ---
+brew "zsh"                       # Zsh shell
+brew "antidote"                  # Zsh plugin manager
+brew "starship"                  # Cross-shell prompt
 
-# --- 開発ツール ---
-brew "git"                       # バージョン管理
-brew "ghq"                       # リポジトリ管理
-brew "fzf"                       # ファジーファインダー
+# --- Development Tools ---
+brew "git"                       # Version control
+brew "ghq"                       # Repository management
+brew "fzf"                       # Fuzzy finder
 
 # =============================================================================
 # GUI Applications (macOS only)
 # =============================================================================
 
-cask "ghostty"                   # モダンターミナルエミュレータ
-cask "karabiner-elements"        # キーボードカスタマイズツール
-cask "1password"                 # パスワードマネージャ
-cask "1password-cli"             # 1Password CLI (op コマンド)
+cask "ghostty"                   # Modern terminal emulator
+cask "karabiner-elements"        # Keyboard customization tool
+cask "1password"                 # Password manager
+cask "1password-cli"             # 1Password CLI (op command)

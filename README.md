@@ -1,40 +1,42 @@
 # dotfiles
 
-macOS / Linux 両対応の dotfiles リポジトリです。
+Cross-platform dotfiles for macOS and Linux.
 
-## リポジトリ構成
+*Read this in other languages: [日本語](README.ja.md)*
+
+## Repository Structure
 
 ```
 .
-├── 1password/ssh/agent.toml   # 1Password SSH Agent 設定
+├── 1password/ssh/agent.toml   # 1Password SSH Agent configuration
 ├── antidote/
-│   └── zsh_plugins.txt        # zsh プラグイン一覧 (antidote)
-├── ghostty/config             # Ghostty ターミナル設定
+│   └── zsh_plugins.txt        # zsh plugin list (antidote)
+├── ghostty/config             # Ghostty terminal configuration
 ├── git/
-│   ├── config                 # Git グローバル設定
-│   └── ignore                 # Git グローバル ignore
-├── karabiner/karabiner.json   # Karabiner-Elements キーボードカスタマイズ
-├── ssh/config                 # SSH クライアント設定 (1Password Agent 連携)
-├── starship/starship.toml     # Starship プロンプト設定
+│   ├── config                 # Git global configuration
+│   └── ignore                 # Git global ignore
+├── karabiner/karabiner.json   # Karabiner-Elements keyboard customization
+├── ssh/config                 # SSH client configuration (1Password Agent integration)
+├── starship/starship.toml     # Starship prompt configuration
 ├── zsh/
-│   ├── zshenv                 # 環境変数 (全 zsh プロセスで読み込み)
-│   └── zshrc                  # インタラクティブシェル設定
-├── Brewfile                   # Homebrew パッケージ定義
-├── install.sh                 # インストールスクリプト
-├── test.sh                    # テストスクリプト
-├── .editorconfig              # エディタ共通設定
-└── .devcontainer/             # Dev Container 設定
+│   ├── zshenv                 # Environment variables (loaded by all zsh processes)
+│   └── zshrc                  # Interactive shell configuration
+├── Brewfile                   # Homebrew package definitions
+├── install.sh                 # Installation script
+├── test.sh                    # Test script
+├── .editorconfig              # Common editor settings
+└── .devcontainer/             # Dev Container configuration
 ```
 
-## 前提条件
+## Prerequisites
 
 - Git
 - Zsh
-- macOS の場合: `xcode-select --install`
+- For macOS: `xcode-select --install`
 
-## セットアップ
+## Setup
 
-### クイックインストール
+### Quick Install
 
 ```sh
 git clone https://github.com/shinyaz/dotfiles.git ~/dotfiles
@@ -42,44 +44,44 @@ cd ~/dotfiles
 ./install.sh
 ```
 
-既存ファイルを上書きする場合は `--force` オプションを付けてください:
+To overwrite existing files, use the `--force` option:
 
 ```sh
 ./install.sh --force
 ```
 
-インストールスクリプトが以下を自動で行います:
-- XDG ディレクトリの作成
-- Zsh 設定ファイルの配置 (zshenv, zshrc, プラグイン定義)
-- Git 設定の配置
-- SSH / 1Password SSH Agent 設定の配置
-- `op-ssh-sign` のシンボリックリンク作成 (`~/.local/bin/` に配置、Git コミット署名で使用)
-- Ghostty 設定の配置
+The installation script automatically:
+- Creates XDG directories
+- Deploys Zsh configuration files (zshenv, zshrc, plugin definitions)
+- Deploys Git configuration
+- Deploys SSH / 1Password SSH Agent configuration
+- Creates symbolic link for `op-ssh-sign` (placed in `~/.local/bin/`, used for Git commit signing)
+- Deploys Ghostty configuration
 
-既にファイルが存在する場合はスキップされます。
+Existing files will be skipped.
 
-### インストール後の手順
+### Post-Installation Steps
 
 ```sh
-# Homebrew のインストール (未インストールの場合)
+# Install Homebrew (if not already installed)
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Brewfile でツールを一括インストール
+# Install tools via Brewfile
 brew bundle
 
-# git/config の user.signingkey に 1Password の SSH 公開鍵を設定
-# 1Password アプリ → SSH キー → 公開鍵をコピー
+# Set user.signingkey in git/config to your 1Password SSH public key
+# 1Password app → SSH key → Copy public key
 
-# シェルの再読み込み
+# Reload shell
 exec $SHELL -l
 ```
 
-### 手動セットアップ
+### Manual Setup
 
-インストールスクリプトを使わない場合は、各ファイルを手動でコピーしてください。配置先は以下の通りです:
+If you prefer not to use the installation script, manually copy each file to the following locations:
 
-| ソース | 配置先 |
-|--------|--------|
+| Source | Destination |
+|--------|-------------|
 | `zsh/zshenv` | `~/.zshenv` |
 | `zsh/zshrc` | `$XDG_CONFIG_HOME/zsh/.zshrc` |
 | `antidote/zsh_plugins.txt` | `$XDG_CONFIG_HOME/zsh/.zsh_plugins.txt` |
@@ -91,23 +93,23 @@ exec $SHELL -l
 | `ghostty/config` | `$XDG_CONFIG_HOME/ghostty/config` |
 | `starship/starship.toml` | `$XDG_CONFIG_HOME/starship.toml` |
 
-## テスト
+## Testing
 
-インストールが正しく完了したかを確認するテストスクリプトを用意しています。
+A test script is provided to verify the installation.
 
 ```sh
 ./test.sh
 ```
 
-以下の項目がチェックされます:
-- XDG ディレクトリの存在
-- 設定ファイルの配置
-- SSH ディレクトリとファイルのパーミッション (700/600)
-- CLI ツールのインストール状況
-- GUI アプリケーションのインストール状況 (macOS のみ)
-- **ファイル内容の差分チェック** - リポジトリ内のファイルと配置済みファイルの内容を比較
-  - Git config の個人設定（[user] セクション）は除外
+The following items are checked:
+- Existence of XDG directories
+- Deployment of configuration files
+- SSH directory and file permissions (700/600)
+- Installation status of CLI tools
+- Installation status of GUI applications (macOS only)
+- **File content diff check** - Compares files in the repository with deployed files
+  - Excludes personal settings in Git config ([user] section)
 
-## ライセンス
+## License
 
 MIT

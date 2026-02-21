@@ -1,5 +1,5 @@
 # =============================================================================
-# Environment (全ての zsh プロセスで読み込まれる)
+# Environment (loaded by all zsh processes)
 # =============================================================================
 
 # --- XDG Base Directory ---
@@ -8,7 +8,7 @@ export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
 export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
 
-# zsh が .zshrc を探すディレクトリ（既存の ZDOTDIR 設定を上書き）
+# Directory where zsh looks for .zshrc (overrides existing ZDOTDIR setting)
 export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
 # =============================================================================
@@ -23,16 +23,16 @@ elif [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
-# ローカルツールを最優先
+# Prioritize local tools
 export PATH="$HOME/.local/bin:$PATH"
 
 # =============================================================================
 # 1Password SSH Agent
 # =============================================================================
 
-# ソケットパスを ~/.1password/agent.sock に統一（ssh/config と合わせる）
-# macOS: 実体へのシンボリックリンクを作成
-# Linux: ~/.1password/agent.sock をそのまま使用
+# Unify socket path to ~/.1password/agent.sock (consistent with ssh/config)
+# macOS: Create symbolic link to actual socket
+# Linux: Use ~/.1password/agent.sock directly
 
 if [[ "$OSTYPE" == darwin* ]]; then
   _1p_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
@@ -49,7 +49,7 @@ if [[ -S "$HOME/.1password/agent.sock" ]]; then
   export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
 fi
 
-# op-ssh-sign を ~/.local/bin に配置（git config の gpg.ssh.program から参照）
+# Place op-ssh-sign in ~/.local/bin (referenced by git config gpg.ssh.program)
 if [[ -x "$_1p_sign" ]] && [[ ! -L "$HOME/.local/bin/op-ssh-sign" ]]; then
   mkdir -p "$HOME/.local/bin"
   ln -sf "$_1p_sign" "$HOME/.local/bin/op-ssh-sign"
@@ -61,9 +61,9 @@ unset _1p_sock _1p_sign
 # Claude Code
 # =============================================================================
 
-# Claude Code を AWS Bedrock 経由で使用する設定
+# Configuration to use Claude Code via AWS Bedrock
 export CLAUDE_CODE_USE_BEDROCK=1
-export AWS_REGION=us-east-1              # Bedrock 利用リージョン
+export AWS_REGION=us-east-1              # Bedrock region
 
 if [[ -f "$HOME/.env.claude" ]]; then
   source "$HOME/.env.claude"

@@ -1,8 +1,8 @@
 # =============================================================================
-# Antidote (プラグインマネージャ)
+# Antidote (plugin manager)
 # =============================================================================
 
-# Homebrew 経由 (macOS / Linux) またはローカルインストール
+# Via Homebrew (macOS / Linux) or local installation
 if [[ -f "${HOMEBREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh" ]]; then
   source "${HOMEBREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh"
 elif [[ -f "${ZDOTDIR:-$HOME}/.antidote/antidote.zsh" ]]; then
@@ -21,28 +21,28 @@ HISTFILE=${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history
 HISTSIZE=100000
 SAVEHIST=100000
 
-setopt EXTENDED_HISTORY          # タイムスタンプ付きで履歴を保存
-setopt HIST_EXPIRE_DUPS_FIRST    # 履歴が上限に達したとき重複から削除
-setopt HIST_IGNORE_ALL_DUPS      # 重複するコマンドは古い方を削除
-setopt HIST_FIND_NO_DUPS         # 履歴検索時に重複を表示しない
-setopt HIST_IGNORE_SPACE         # スペースで始まるコマンドは履歴に残さない
-setopt HIST_REDUCE_BLANKS        # 余分な空白を削除
-setopt HIST_VERIFY               # 履歴展開後すぐに実行せず確認できるようにする
-setopt SHARE_HISTORY             # ターミナル間で履歴を共有
+setopt EXTENDED_HISTORY          # Save history with timestamps
+setopt HIST_EXPIRE_DUPS_FIRST    # Remove duplicates first when history limit is reached
+setopt HIST_IGNORE_ALL_DUPS      # Remove older duplicate commands
+setopt HIST_FIND_NO_DUPS         # Don't show duplicates in history search
+setopt HIST_IGNORE_SPACE         # Don't save commands starting with space
+setopt HIST_REDUCE_BLANKS        # Remove extra whitespace
+setopt HIST_VERIFY               # Allow confirmation before executing history expansion
+setopt SHARE_HISTORY             # Share history between terminals
 
 # =============================================================================
 # General Options
 # =============================================================================
 
-setopt AUTO_CD                   # ディレクトリ名だけで cd
-setopt AUTO_PUSHD                # cd 時に自動で pushd
-setopt PUSHD_IGNORE_DUPS         # pushd で重複を無視
-setopt PUSHD_MINUS               # +/- の意味を直感的に入れ替え
-setopt CORRECT                   # コマンドのタイポを修正提案
-setopt INTERACTIVE_COMMENTS      # インタラクティブシェルでもコメントを許可
-setopt NO_BEEP                   # ビープ音を無効化
-setopt NO_FLOW_CONTROL           # Ctrl+S/Q のフロー制御を無効化
-setopt GLOB_DOTS                 # ドットファイルもグロブの対象にする
+setopt AUTO_CD                   # cd by directory name alone
+setopt AUTO_PUSHD                # Automatically pushd on cd
+setopt PUSHD_IGNORE_DUPS         # Ignore duplicates in pushd
+setopt PUSHD_MINUS               # Swap +/- meanings intuitively
+setopt CORRECT                   # Suggest corrections for typos
+setopt INTERACTIVE_COMMENTS      # Allow comments in interactive shell
+setopt NO_BEEP                   # Disable beep
+setopt NO_FLOW_CONTROL           # Disable Ctrl+S/Q flow control
+setopt GLOB_DOTS                 # Include dotfiles in glob matches
 
 # =============================================================================
 # Completion
@@ -50,7 +50,7 @@ setopt GLOB_DOTS                 # ドットファイルもグロブの対象に
 
 autoload -Uz compinit
 
-# キャッシュを使って高速化（1日1回だけ再生成）
+# Use cache for speed (regenerate only once per day)
 _zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
 if [[ -n ${_zcompdump}(#qN.mh+24) ]]; then
   compinit -d "$_zcompdump"
@@ -59,19 +59,19 @@ else
 fi
 unset _zcompdump
 
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'   # 大文字小文字を区別しない
-zstyle ':completion:*' menu select                      # メニュー選択を有効化
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # 補完候補に色を付ける
-zstyle ':completion:*' group-name ''                    # グループ名で分類
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'   # Case insensitive
+zstyle ':completion:*' menu select                      # Enable menu selection
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # Colorize completion candidates
+zstyle ':completion:*' group-name ''                    # Classify by group name
 zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
-zstyle ':completion:*' use-cache on                     # 補完結果をキャッシュ
+zstyle ':completion:*' use-cache on                     # Cache completion results
 zstyle ':completion:*' cache-path ${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compcache
 
 # =============================================================================
 # Key Bindings
 # =============================================================================
 
-# Emacs 風キーバインド（個別の bindkey より先に設定すること）
+# Emacs-style key bindings (set before individual bindkeys)
 bindkey -e
 
 # --- history-substring-search ---
@@ -80,7 +80,7 @@ bindkey '^[[B' history-substring-search-down
 bindkey '^P'   history-substring-search-up
 bindkey '^N'   history-substring-search-down
 
-# --- 単語単位のカーソル移動 (Option+Left/Right) ---
+# --- Word-wise cursor movement (Option+Left/Right) ---
 bindkey '^[b' backward-word
 bindkey '^[f' forward-word
 
@@ -117,13 +117,13 @@ alias du='du -h'
 alias cp='cp -iv'
 alias mv='mv -iv'
 
-# --- Directory Stack (AUTO_PUSHD 活用) ---
+# --- Directory Stack (utilizing AUTO_PUSHD) ---
 alias d='dirs -v | head -20'
 alias 1='cd -1'
 alias 2='cd -2'
 alias 3='cd -3'
 
-# --- Git (git/config の [alias] に無いもの) ---
+# --- Git (items not in git/config [alias]) ---
 alias g='git'
 alias gco='git checkout'
 
@@ -135,7 +135,7 @@ alias path='echo $PATH | tr ":" "\n"'
 # Functions
 # =============================================================================
 
-# ディレクトリを作成して移動
+# Create directory and move into it
 mkcd() { mkdir -p "$1" && cd "$1" }
 
 # =============================================================================

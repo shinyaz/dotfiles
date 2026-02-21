@@ -34,7 +34,7 @@ confirm-close-surface = false
 # macOS
 # =============================================================================
 
-# Option キーを Alt として扱う（zsh の Option+Left/Right 単語移動に必須）
+# Treat Option key as Alt (required for zsh Option+Left/Right word navigation)
 macos-option-as-alt = true
 macos-titlebar-style = tabs
 
@@ -50,18 +50,18 @@ clipboard-write = allow
 # Keybindings
 # =============================================================================
 
-# 画面分割
+# Split screen
 keybind = super+d=new_split:right
 keybind = super+shift+d=new_split:down
 keybind = super+w=close_surface
 
-# 分割ペイン間の移動
+# Navigate between split panes
 keybind = super+alt+left=goto_split:left
 keybind = super+alt+right=goto_split:right
 keybind = super+alt+up=goto_split:top
 keybind = super+alt+down=goto_split:bottom
 
-# フォントサイズ変更
+# Font size adjustment
 keybind = super+equal=increase_font_size:1
 keybind = super+minus=decrease_font_size:1
 keybind = super+zero=reset_font_size

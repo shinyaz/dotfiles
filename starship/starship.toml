@@ -2,13 +2,13 @@
 # General
 # =============================================================================
 
-# プロンプト先頭に改行を入れて見やすくする
+# Add newline at prompt start for readability
 add_newline = true
 
-# コマンド実行後の右端に表示するまでの待機時間
+# Wait time before displaying at right edge after command execution
 command_timeout = 1000
 
-# プロンプトの構成
+# Prompt format
 format = """
 $directory\
 $git_branch\
@@ -64,7 +64,7 @@ staged = "+${count}"
 deleted = "✘${count}"
 
 # =============================================================================
-# Languages (プロジェクトディレクトリにいるときだけ表示)
+# Languages (displayed only in project directories)
 # =============================================================================
 
 [python]
@@ -112,7 +112,7 @@ style = "bold yellow"
 show_milliseconds = false
 
 # =============================================================================
-# 不要なモジュールを無効化 (プロンプト高速化)
+# Disable unnecessary modules (speed up prompt)
 # =============================================================================
 
 [package]

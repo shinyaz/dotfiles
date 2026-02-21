@@ -1,8 +1,8 @@
 # =============================================================================
-# Antidote プラグイン定義
+# Antidote Plugin Definitions
 # =============================================================================
 
-# --- Completions (compinit より前にロードされるよう先頭に配置) ---
+# --- Completions (placed first to load before compinit) ---
 zsh-users/zsh-completions
 
 # --- Suggestions & Search ---
@@ -10,9 +10,9 @@ zsh-users/zsh-autosuggestions
 zsh-users/zsh-history-substring-search
 
 # --- Utilities ---
-djui/alias-tips                              # フルコマンド入力時にエイリアスをリマインド
-ohmyzsh/ohmyzsh path:plugins/sudo            # ESC 2回で sudo を先頭に追加
-ohmyzsh/ohmyzsh path:plugins/extract         # extract コマンドで何でも解凍
+djui/alias-tips                              # Remind aliases when full command is typed
+ohmyzsh/ohmyzsh path:plugins/sudo            # Press ESC twice to prepend sudo
+ohmyzsh/ohmyzsh path:plugins/extract         # Extract any archive with extract command
 
-# --- Syntax Highlighting (必ず最後にロード) ---
+# --- Syntax Highlighting (must be loaded last) ---
 zsh-users/zsh-syntax-highlighting

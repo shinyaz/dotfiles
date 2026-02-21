@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # =============================================================================
-# dotfiles テストスクリプト
+# dotfiles Test Script
 # =============================================================================
-# 設定ファイルの配置とツールのインストール状況を確認します
+# Verifies configuration file deployment and tool installation status
 
 XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
 XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
 
 # =============================================================================
-# ヘルパー関数
+# Helper Functions
 # =============================================================================
 
 pass=0
@@ -26,7 +26,7 @@ check_file() {
   if [[ -f "$path" ]]; then
     ok "$name: $path"
   else
-    ng "$name が見つかりません: $path"
+    ng "$name not found: $path"
   fi
 }
 
@@ -35,7 +35,7 @@ check_dir() {
   if [[ -d "$path" ]]; then
     ok "$name: $path"
   else
-    ng "$name が見つかりません: $path"
+    ng "$name not found: $path"
   fi
 }
 
@@ -44,12 +44,12 @@ check_permission() {
   if [[ -e "$path" ]]; then
     actual=$(stat -f "%OLp" "$path" 2>/dev/null || stat -c "%a" "$path" 2>/dev/null)
     if [[ "$actual" == "$expected" ]]; then
-      ok "$name のパーミッション: $expected"
+      ok "$name permissions: $expected"
     else
-      ng "$name のパーミッションが不正: $actual (期待値: $expected)"
+      ng "$name incorrect permissions: $actual (expected: $expected)"
     fi
   else
-    ng "$name が存在しません: $path"
+    ng "$name does not exist: $path"
   fi
 }
 
@@ -57,9 +57,9 @@ check_command() {
   local cmd="$1" name="${2:-$cmd}"
   if command -v "$cmd" &> /dev/null; then
     version=$(eval "$cmd --version 2>/dev/null | head -1" || echo "")
-    ok "$name がインストール済み${version:+: $version}"
+    ok "$name installed${version:+: $version}"
   else
-    ng "$name がインストールされていません"
+    ng "$name not installed"
   fi
 }
 
@@ -69,7 +69,7 @@ check_symlink() {
     target=$(readlink "$path")
     ok "$name: $path -> $target"
   else
-    ng "$name のシンボリックリンクが見つかりません: $path"
+    ng "$name symbolic link not found: $path"
   fi
 }
 
@@ -77,16 +77,16 @@ check_file_diff() {
   local src="$1" dest="$2" name="$3" exclude_pattern="${4:-}"
 
   if [[ ! -f "$src" ]] || [[ ! -f "$dest" ]]; then
-    return 0  # ファイルが存在しない場合はスキップ（他のチェックでカバー）
+    return 0  # Skip if file doesn't exist (covered by other checks)
   fi
 
   local src_content dest_content
   if [[ "$exclude_pattern" == "user_section" ]]; then
-    # Git config の [user] セクション全体を除外（個人固有の設定のため）
+    # Exclude entire [user] section in Git config (personal settings)
     src_content=$(sed '/^\[user\]/,/^$/d' "$src")
     dest_content=$(sed '/^\[user\]/,/^$/d' "$dest")
   elif [[ -n "$exclude_pattern" ]]; then
-    # 除外パターンがある場合は grep -v で除外
+    # Exclude with grep -v if pattern is specified
     src_content=$(grep -v "$exclude_pattern" "$src" 2>/dev/null || cat "$src")
     dest_content=$(grep -v "$exclude_pattern" "$dest" 2>/dev/null || cat "$dest")
   else
@@ -95,22 +95,22 @@ check_file_diff() {
   fi
 
   if diff -q <(echo "$src_content") <(echo "$dest_content") &>/dev/null; then
-    ok "$name の内容が一致"
+    ok "$name content matches"
   else
-    ng "$name の内容に差分があります: $dest (./install.sh --force で上書き可能)"
+    ng "$name content differs: $dest (overwrite with ./install.sh --force)"
   fi
 }
 
 # =============================================================================
-# XDG ディレクトリ
+# XDG Directories
 # =============================================================================
 
-section "XDG ディレクトリ"
+section "XDG Directories"
 check_dir "$XDG_CONFIG_HOME" "XDG_CONFIG_HOME"
 check_dir "$XDG_CACHE_HOME" "XDG_CACHE_HOME"
 check_dir "$XDG_DATA_HOME" "XDG_DATA_HOME"
-check_dir "$XDG_DATA_HOME/zsh" "Zsh データディレクトリ"
-check_dir "$XDG_CACHE_HOME/zsh" "Zsh キャッシュディレクトリ"
+check_dir "$XDG_DATA_HOME/zsh" "Zsh data directory"
+check_dir "$XDG_CACHE_HOME/zsh" "Zsh cache directory"
 
 # =============================================================================
 # Brewfile
@@ -121,10 +121,10 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 check_file "$DOTFILES_DIR/Brewfile" "Brewfile"
 
 # =============================================================================
-# Zsh 設定ファイル
+# Zsh Configuration Files
 # =============================================================================
 
-section "Zsh 設定ファイル"
+section "Zsh Configuration Files"
 check_file "$HOME/.zshenv" "zshenv"
 check_file_diff "$DOTFILES_DIR/zsh/zshenv" "$HOME/.zshenv" "zshenv"
 
@@ -135,10 +135,10 @@ check_file "$XDG_CONFIG_HOME/zsh/.zsh_plugins.txt" "zsh_plugins.txt"
 check_file_diff "$DOTFILES_DIR/antidote/zsh_plugins.txt" "$XDG_CONFIG_HOME/zsh/.zsh_plugins.txt" "zsh_plugins.txt"
 
 # =============================================================================
-# Git 設定ファイル
+# Git Configuration Files
 # =============================================================================
 
-section "Git 設定ファイル"
+section "Git Configuration Files"
 check_file "$XDG_CONFIG_HOME/git/config" "Git config"
 check_file_diff "$DOTFILES_DIR/git/config" "$XDG_CONFIG_HOME/git/config" "Git config" "user_section"
 
@@ -146,20 +146,20 @@ check_file "$XDG_CONFIG_HOME/git/ignore" "Git ignore"
 check_file_diff "$DOTFILES_DIR/git/ignore" "$XDG_CONFIG_HOME/git/ignore" "Git ignore"
 
 # =============================================================================
-# Karabiner-Elements 設定ファイル
+# Karabiner-Elements Configuration Files
 # =============================================================================
 
-section "Karabiner-Elements 設定ファイル"
+section "Karabiner-Elements Configuration Files"
 check_file "$XDG_CONFIG_HOME/karabiner/karabiner.json" "Karabiner config"
 check_file_diff "$DOTFILES_DIR/karabiner/karabiner.json" "$XDG_CONFIG_HOME/karabiner/karabiner.json" "Karabiner config"
 
 # =============================================================================
-# SSH 設定ファイル
+# SSH Configuration Files
 # =============================================================================
 
-section "SSH 設定ファイル"
-check_dir "$HOME/.ssh" "SSH ディレクトリ"
-check_permission "$HOME/.ssh" "700" "SSH ディレクトリ"
+section "SSH Configuration Files"
+check_dir "$HOME/.ssh" "SSH directory"
+check_permission "$HOME/.ssh" "700" "SSH directory"
 check_file "$HOME/.ssh/config" "SSH config"
 check_file_diff "$DOTFILES_DIR/ssh/config" "$HOME/.ssh/config" "SSH config"
 check_permission "$HOME/.ssh/config" "600" "SSH config"
@@ -174,85 +174,85 @@ check_file_diff "$DOTFILES_DIR/1password/ssh/agent.toml" "$XDG_CONFIG_HOME/1pass
 check_symlink "$HOME/.local/bin/op-ssh-sign" "op-ssh-sign"
 
 # =============================================================================
-# Ghostty 設定ファイル
+# Ghostty Configuration Files
 # =============================================================================
 
-section "Ghostty 設定ファイル"
+section "Ghostty Configuration Files"
 check_file "$XDG_CONFIG_HOME/ghostty/config" "Ghostty config"
 check_file_diff "$DOTFILES_DIR/ghostty/config" "$XDG_CONFIG_HOME/ghostty/config" "Ghostty config"
 
 # =============================================================================
-# Starship 設定ファイル
+# Starship Configuration Files
 # =============================================================================
 
-section "Starship 設定ファイル"
+section "Starship Configuration Files"
 check_file "$XDG_CONFIG_HOME/starship.toml" "Starship config"
 check_file_diff "$DOTFILES_DIR/starship/starship.toml" "$XDG_CONFIG_HOME/starship.toml" "Starship config"
 
 # =============================================================================
-# CLI ツール
+# CLI Tools
 # =============================================================================
 
-section "CLI ツール"
+section "CLI Tools"
 check_command "zsh" "Zsh"
 check_command "git" "Git"
 check_command "ghq" "ghq"
 check_command "fzf" "fzf"
 check_command "starship" "Starship"
 
-# Antidote の確認（Homebrew 経由またはローカル）
+# Check Antidote (via Homebrew or local)
 if [[ -f "${HOMEBREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh" ]]; then
-  ok "Antidote がインストール済み (Homebrew)"
+  ok "Antidote installed (Homebrew)"
 elif [[ -f "${ZDOTDIR:-$HOME}/.antidote/antidote.zsh" ]]; then
-  ok "Antidote がインストール済み (ローカル)"
+  ok "Antidote installed (local)"
 else
-  ng "Antidote がインストールされていません"
+  ng "Antidote not installed"
 fi
 
 # =============================================================================
-# GUI アプリケーション (macOS のみ)
+# GUI Applications (macOS only)
 # =============================================================================
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
-  section "GUI アプリケーション"
+  section "GUI Applications"
 
   if [[ -d "/Applications/Ghostty.app" ]]; then
-    ok "Ghostty がインストール済み"
+    ok "Ghostty installed"
   else
-    ng "Ghostty がインストールされていません"
+    ng "Ghostty not installed"
   fi
 
   if [[ -d "/Applications/Karabiner-Elements.app" ]]; then
-    ok "Karabiner-Elements がインストール済み"
+    ok "Karabiner-Elements installed"
   else
-    ng "Karabiner-Elements がインストールされていません"
+    ng "Karabiner-Elements not installed"
   fi
 
   if [[ -d "/Applications/1Password.app" ]]; then
-    ok "1Password がインストール済み"
+    ok "1Password installed"
   else
-    ng "1Password がインストールされていません"
+    ng "1Password not installed"
   fi
 
   check_command "op" "1Password CLI"
 fi
 
 # =============================================================================
-# サマリー
+# Summary
 # =============================================================================
 
-section "テスト結果"
+section "Test Results"
 total=$((pass + fail))
 printf '\n'
-printf '  合計: %d\n' "$total"
-printf '  \033[0;32m成功: %d\033[0m\n' "$pass"
-printf '  \033[0;31m失敗: %d\033[0m\n' "$fail"
+printf '  Total: %d\n' "$total"
+printf '  \033[0;32mPassed: %d\033[0m\n' "$pass"
+printf '  \033[0;31mFailed: %d\033[0m\n' "$fail"
 printf '\n'
 
 if [[ $fail -eq 0 ]]; then
-  printf '\033[1;32m✓ すべてのテストが成功しました\033[0m\n\n'
+  printf '\033[1;32m✓ All tests passed\033[0m\n\n'
   exit 0
 else
-  printf '\033[1;33m! 一部のテストが失敗しました\033[0m\n\n'
+  printf '\033[1;33m! Some tests failed\033[0m\n\n'
   exit 1
 fi

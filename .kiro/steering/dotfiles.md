@@ -2,82 +2,103 @@
 inclusion: auto
 ---
 
-# dotfiles リポジトリ規約
+# dotfiles Repository Conventions
 
-## 概要
+## Overview
 
-macOS / Linux 両対応の dotfiles リポジトリ。各ディレクトリが1つのツールの設定に対応する。
-設定ファイルは `install.sh` で XDG 準拠のパスにコピーして配置する。
+Cross-platform dotfiles repository for macOS and Linux. Each directory corresponds to one tool's configuration.
+Configuration files are copied to XDG-compliant paths via `install.sh`.
 
-## ディレクトリ構成
+## Directory Structure
 
-- `zsh/` — zshenv (環境変数), zshrc (インタラクティブシェル設定)
-- `git/` — Git グローバル設定 + グローバル ignore
-- `ssh/` — SSH クライアント設定 (1Password Agent 連携)
-- `1password/` — 1Password SSH Agent 設定
-- `antidote/` — zsh プラグイン定義
-- `ghostty/` — Ghostty ターミナル設定
-- `starship/` — Starship プロンプト設定
-- `.devcontainer/` — Dev Container 設定
+- `zsh/` — zshenv (environment variables), zshrc (interactive shell configuration)
+- `git/` — Git global configuration + global ignore
+- `ssh/` — SSH client configuration (1Password Agent integration)
+- `1password/` — 1Password SSH Agent configuration
+- `antidote/` — zsh plugin definitions
+- `ghostty/` — Ghostty terminal configuration
+- `starship/` — Starship prompt configuration
+- `.devcontainer/` — Dev Container configuration
 
-## Zsh ファイルの使い分け
+## Zsh File Usage
 
-- `zshenv` — 全ての zsh プロセスで読み込まれる。環境変数 (XDG, PATH, SSH_AUTH_SOCK など) のみ置く
-- `zshrc` — インタラクティブシェルでのみ読み込まれる。プラグイン、補完、エイリアス、プロンプトなどを置く
-- 環境変数は zshenv、それ以外は zshrc。迷ったら zshrc
+- `zshenv` — Loaded by all zsh processes. Place only environment variables (XDG, PATH, SSH_AUTH_SOCK, etc.)
+- `zshrc` — Loaded only by interactive shells. Place plugins, completion, aliases, prompts, etc.
+- Environment variables go in zshenv, everything else in zshrc. When in doubt, use zshrc
 
-## コーディング規約
+## Coding Conventions
 
-### コメントスタイル
+### Comment Style
 
-- コメントは日本語で記述する
-- セクション区切りは `# =============================================================================` を使用
-- サブセクション区切りは `# --- サブセクション名 ---` を使用
-- インラインコメントはカラムを揃える（値の後ろにスペースを入れて `# 説明` の形式）
+- Comments are written in English
+- Section separators use `# =============================================================================`
+- Subsection separators use `# --- Subsection Name ---`
+- Inline comments are column-aligned (space after value, followed by `# explanation`)
 
-### セクション区切りの例
+### Section Separator Example
 
 ```sh
 # =============================================================================
-# セクション名
+# Section Name
 # =============================================================================
 
-# --- サブセクション名 ---
+# --- Subsection Name ---
 ```
 
-### macOS / Linux 両対応
+### macOS / Linux Cross-Platform Support
 
-- パスをハードコードしない。OS 判定で分岐する
-  - macOS 判定: `[[ "$OSTYPE" == darwin* ]]` (zsh) / `[[ "$(uname -s)" == "Darwin" ]]` (bash)
+- Do not hardcode paths. Branch based on OS detection
+  - macOS detection: `[[ "$OSTYPE" == darwin* ]]` (zsh) / `[[ "$(uname -s)" == "Darwin" ]]` (bash)
   - Homebrew: `/opt/homebrew` (macOS) / `/home/linuxbrew/.linuxbrew` (Linux)
-  - 1Password: ソケットやバイナリのパスが OS ごとに異なる
-- Git config で `~` や `$HOME` を使わない（Git は展開しない）。PATH 経由のコマンド名か絶対パスを使う
-- ツールの存在チェックには `(( $+commands[ツール名] ))` (zsh) や `[[ -x パス ]]` を使い、未インストール環境でもエラーにならないようにする
+  - 1Password: Socket and binary paths differ by OS
+- Do not use `~` or `$HOME` in Git config (Git doesn't expand them). Use command names via PATH or absolute paths
+- Use `(( $+commands[tool_name] ))` (zsh) or `[[ -x path ]]` for tool existence checks to avoid errors in environments where tools are not installed
 
 ### XDG Base Directory
 
-- 全パスは XDG Base Directory 変数を使用する
+- All paths use XDG Base Directory variables
   - `$XDG_CONFIG_HOME` (`~/.config`)
   - `$XDG_CACHE_HOME` (`~/.cache`)
   - `$XDG_DATA_HOME` (`~/.local/share`)
-- 履歴ファイル: `$XDG_DATA_HOME/zsh/history`
-- 補完キャッシュ: `$XDG_CACHE_HOME/zsh/compcache`
+- History file: `$XDG_DATA_HOME/zsh/history`
+- Completion cache: `$XDG_CACHE_HOME/zsh/compcache`
 - compinit dump: `$XDG_CACHE_HOME/zsh/zcompdump`
 
 ### install.sh
 
-- `set -euo pipefail` を使用
-- `copy_file` 関数でファイルをコピー。既存ファイルはスキップ、`--force` で上書き
-- セクション区切りは他のファイルと同じ `# ===...===` を使用
-- SSH config のパーミッション設定 (700/600) を忘れない
+- Use `set -euo pipefail`
+- Copy files with `copy_file` function. Skip existing files, overwrite with `--force`
+- Section separators use the same `# ===...===` as other files
+- Don't forget SSH config permissions (700/600)
 
-### Git エイリアス
+### Git Aliases
 
-- シェルエイリアス (`zsh/zshrc`) と Git エイリアス (`git/config [alias]`) を重複させない
-- 短縮形は Git エイリアスに寄せる。シェル側には `g='git'` と Git エイリアスにないものだけ置く
+- Do not duplicate shell aliases (`zsh/zshrc`) and Git aliases (`git/config [alias]`)
+- Prefer Git aliases for short forms. On the shell side, only place `g='git'` and things not in Git aliases
 
-### コミットメッセージ
+### Commit Messages
 
-- 英語で記述する
-- Conventional Commits 形式 (`feat:`, `fix:`, `refactor:` など)
-- 本文に変更内容を箇条書きで記載する
+- Write in English
+- Use Conventional Commits format (`feat:`, `fix:`, `refactor:`, etc.)
+- List changes in bullet points in the body
+
+## Internationalization
+
+### Documentation
+
+- **Base language is English**: All primary documentation files are written in English
+- **Localized versions**: Use language suffix for translations (e.g., `README.ja.md` for Japanese)
+- **Always link to other languages**: Include language links at the top of each documentation file
+  - Example: `*Read this in other languages: [日本語](README.ja.md)*`
+
+### Code Comments
+
+- **All code comments must be in English**: Configuration files, scripts, and source code
+- This ensures accessibility for international contributors and users
+- Use clear, concise English suitable for non-native speakers
+
+### File Naming
+
+- Primary documentation: `README.md`, `CLAUDE.md`, etc. (always in English)
+- Localized versions: `README.{lang}.md`, `CLAUDE.{lang}.md` (e.g., `README.ja.md`)
+- Configuration files: No language suffix (comments in English)

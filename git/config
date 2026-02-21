@@ -6,7 +6,7 @@
 	name  = Shinya Tahara
 	email = shinya@fastmail.com
 	# signingkey = ssh-ed25519 AAAA...
-	# ↑ 1Password アプリから SSH 公開鍵をコピーして設定
+	# ↑ Copy SSH public key from 1Password app and set here
 
 # =============================================================================
 # Core
@@ -15,9 +15,9 @@
 [core]
 	editor    = vim
 	filemode  = false
-	autocrlf  = input              # LF に統一
-	quotepath = false              # 日本語ファイル名をエスケープしない
-	pager     = less -FRX          # 短い出力はそのまま表示
+	autocrlf  = input              # Unify to LF
+	quotepath = false              # Don't escape Japanese filenames
+	pager     = less -FRX          # Display short output directly
 
 [init]
 	defaultBranch = main
@@ -26,41 +26,41 @@
 	ui = auto
 
 [help]
-	autocorrect = prompt           # タイポ時に修正候補を提案
+	autocorrect = prompt           # Suggest corrections for typos
 
 # =============================================================================
 # Remote Operations
 # =============================================================================
 
 [push]
-	default         = current      # 同名のリモートブランチに push
-	autoSetupRemote = true         # 初回 push 時に自動で upstream を設定
-	followTags      = true         # push 時にタグも一緒に送る
+	default         = current      # Push to remote branch with same name
+	autoSetupRemote = true         # Automatically set upstream on first push
+	followTags      = true         # Push tags together
 
 [pull]
-	rebase = true                  # pull 時に rebase（マージコミットを避ける）
+	rebase = true                  # Rebase on pull (avoid merge commits)
 
 [fetch]
-	prune = true                   # 削除済みリモートブランチを自動削除
+	prune = true                   # Auto-delete removed remote branches
 
 # =============================================================================
 # Diff / Merge / Rebase
 # =============================================================================
 
 [diff]
-	algorithm  = histogram         # より賢い diff アルゴリズム
-	colorMoved = default           # 移動した行を色分け表示
-	renames    = true              # リネーム検出を有効化
+	algorithm  = histogram         # Smarter diff algorithm
+	colorMoved = default           # Color-code moved lines
+	renames    = true              # Enable rename detection
 
 [merge]
-	conflictstyle = zdiff3         # コンフリクト表示に共通祖先も含める
+	conflictstyle = zdiff3         # Include common ancestor in conflict display
 
 [rebase]
-	autoSquash = true              # fixup! / squash! コミットを自動並び替え
-	autoStash  = true              # rebase 前に自動 stash / 後に自動 pop
+	autoSquash = true              # Auto-sort fixup! / squash! commits
+	autoStash  = true              # Auto stash before rebase / pop after
 
 [rerere]
-	enabled = true                 # コンフリクト解決を記憶して再利用
+	enabled = true                 # Remember and reuse conflict resolutions
 
 # =============================================================================
 # Commit / Tag Signing (1Password SSH)
@@ -68,27 +68,27 @@
 
 [commit]
 	gpgsign = true
-	verbose = true                 # コミット時に diff を表示
+	verbose = true                 # Show diff when committing
 
 [tag]
 	gpgsign = true
-	sort    = -version:refname     # バージョン番号の降順で表示
+	sort    = -version:refname     # Sort by version number descending
 
 [gpg]
 	format = ssh
 
 [gpg "ssh"]
-	program = op-ssh-sign          # ~/.local/bin 経由で解決
+	program = op-ssh-sign          # Resolved via ~/.local/bin
 
 # =============================================================================
 # Display
 # =============================================================================
 
 [branch]
-	sort = -committerdate          # 最終コミット日時の新しい順に表示
+	sort = -committerdate          # Sort by most recent commit date
 
 [log]
-	date = iso                     # ISO 形式で日付を表示
+	date = iso                     # Display date in ISO format
 
 # =============================================================================
 # Aliases
@@ -110,4 +110,4 @@
 # =============================================================================
 
 [ghq]
-	root = ~/Developments/src       # ghq はチルダを展開する（要ユーザー調整）
+	root = ~/Developments/src       # ghq expands tilde (user adjustment required)

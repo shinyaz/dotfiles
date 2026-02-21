@@ -14,11 +14,11 @@ trim_trailing_whitespace = true
 insert_final_newline     = true
 
 # =============================================================================
-# 言語別設定
+# Language-specific Settings
 # =============================================================================
 
 [*.md]
-trim_trailing_whitespace = false  # Markdown では行末スペースが意味を持つ
+trim_trailing_whitespace = false  # Trailing spaces have meaning in Markdown
 
 [Makefile]
 indent_style = tab
