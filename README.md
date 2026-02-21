@@ -21,6 +21,7 @@ macOS / Linux 両対応の dotfiles リポジトリです。
 │   └── zshrc                  # インタラクティブシェル設定
 ├── Brewfile                   # Homebrew パッケージ定義
 ├── install.sh                 # インストールスクリプト
+├── test.sh                    # テストスクリプト
 ├── .editorconfig              # エディタ共通設定
 └── .devcontainer/             # Dev Container 設定
 ```
@@ -89,6 +90,23 @@ exec $SHELL -l
 | `1password/ssh/agent.toml` | `$XDG_CONFIG_HOME/1password/ssh/agent.toml` |
 | `ghostty/config` | `$XDG_CONFIG_HOME/ghostty/config` |
 | `starship/starship.toml` | `$XDG_CONFIG_HOME/starship.toml` |
+
+## テスト
+
+インストールが正しく完了したかを確認するテストスクリプトを用意しています。
+
+```sh
+./test.sh
+```
+
+以下の項目がチェックされます:
+- XDG ディレクトリの存在
+- 設定ファイルの配置
+- SSH ディレクトリとファイルのパーミッション (700/600)
+- CLI ツールのインストール状況
+- GUI アプリケーションのインストール状況 (macOS のみ)
+- **ファイル内容の差分チェック** - リポジトリ内のファイルと配置済みファイルの内容を比較
+  - Git config の個人設定（[user] セクション）は除外
 
 ## ライセンス
 
