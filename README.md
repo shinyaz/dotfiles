@@ -14,6 +14,7 @@ macOS / Linux 両対応の dotfiles リポジトリです。
 │   ├── config                 # Git グローバル設定
 │   └── ignore                 # Git グローバル ignore
 ├── ssh/config                 # SSH クライアント設定 (1Password Agent 連携)
+├── starship/starship.toml     # Starship プロンプト設定
 ├── zsh/
 │   ├── zshenv                 # 環境変数 (全 zsh プロセスで読み込み)
 │   └── zshrc                  # インタラクティブシェル設定
@@ -84,6 +85,7 @@ exec $SHELL -l
 | `ssh/config` | `~/.ssh/config` |
 | `1password/ssh/agent.toml` | `$XDG_CONFIG_HOME/1password/ssh/agent.toml` |
 | `ghostty/config` | `$XDG_CONFIG_HOME/ghostty/config` |
+| `starship/starship.toml` | `$XDG_CONFIG_HOME/starship.toml` |
 
 ## ライセンス
 

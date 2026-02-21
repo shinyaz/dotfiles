@@ -12,3 +12,22 @@ end_of_line              = lf
 charset                  = utf-8
 trim_trailing_whitespace = true
 insert_final_newline     = true
+
+# =============================================================================
+# 言語別設定
+# =============================================================================
+
+[*.md]
+trim_trailing_whitespace = false  # Markdown では行末スペースが意味を持つ
+
+[Makefile]
+indent_style = tab
+
+[*.go]
+indent_style = tab
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.py]
+indent_size = 4

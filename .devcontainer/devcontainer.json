@@ -4,21 +4,24 @@
 	"name": "Ubuntu",
 	"build": {
 		"dockerfile": "Dockerfile",
-		// Update 'VARIANT' to pick an Ubuntu version: hirsute, focal, bionic
-		// Use hirsute or bionic on local arm64/Apple Silicon.
+		// Update 'VARIANT' to pick an Ubuntu version: jammy, focal, bionic
 		"args": {
-			"VARIANT": "focal"
+			"VARIANT": "jammy"
 		}
 	},
 	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		"terminal.integrated.shell.linux": "/bin/zsh"
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh"
+			},
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"EditorConfig.EditorConfig",
+				"eamodio.gitlens"
+			]
+		}
 	},
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"EditorConfig.EditorConfig",
-		"eamodio.gitlens"
-	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 	// Use 'postCreateCommand' to run commands after the container is created.

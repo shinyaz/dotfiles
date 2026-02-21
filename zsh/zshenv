@@ -35,18 +35,18 @@ export PATH="$HOME/.local/bin:$PATH"
 # Linux: ~/.1password/agent.sock をそのまま使用
 
 if [[ "$OSTYPE" == darwin* ]]; then
-  _1p_sock=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
-  _1p_sign=/Applications/1Password.app/Contents/MacOS/op-ssh-sign
-  if [[ -S "$_1p_sock" ]] && [[ ! -S ~/.1password/agent.sock ]]; then
-    mkdir -p ~/.1password
-    ln -sf "$_1p_sock" ~/.1password/agent.sock
+  _1p_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  _1p_sign="/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+  if [[ -S "$_1p_sock" ]] && [[ ! -S "$HOME/.1password/agent.sock" ]]; then
+    mkdir -p "$HOME/.1password"
+    ln -sf "$_1p_sock" "$HOME/.1password/agent.sock"
   fi
 else
-  _1p_sign=/opt/1Password/op-ssh-sign
+  _1p_sign="/opt/1Password/op-ssh-sign"
 fi
 
-if [[ -S ~/.1password/agent.sock ]]; then
-  export SSH_AUTH_SOCK=~/.1password/agent.sock
+if [[ -S "$HOME/.1password/agent.sock" ]]; then
+  export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
 fi
 
 # op-ssh-sign を ~/.local/bin に配置（git config の gpg.ssh.program から参照）
@@ -61,9 +61,10 @@ unset _1p_sock _1p_sign
 # Claude Code
 # =============================================================================
 
+# Claude Code を AWS Bedrock 経由で使用する設定
 export CLAUDE_CODE_USE_BEDROCK=1
-export AWS_REGION=us-east-1
+export AWS_REGION=us-east-1              # Bedrock 利用リージョン
 
-if [[ -f ~/.env.claude ]]; then
-  source ~/.env.claude
+if [[ -f "$HOME/.env.claude" ]]; then
+  source "$HOME/.env.claude"
 fi

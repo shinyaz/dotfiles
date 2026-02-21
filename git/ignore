@@ -60,6 +60,9 @@ vendor/
 
 *.log
 *.out
+*.bak
+*.tmp
+*.temp
 dist/
 build/
 coverage/
@@ -71,3 +74,18 @@ coverage/
 .env
 .env.local
 .env.*.local
+
+# =============================================================================
+# Development Tools
+# =============================================================================
+
+# Jupyter
+*.ipynb_checkpoints/
+.jupyter/
+
+# direnv
+.direnv/
+.envrc
+
+# asdf
+.tool-versions
