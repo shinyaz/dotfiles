@@ -13,11 +13,13 @@ macOS / Linux 両対応の dotfiles リポジトリです。
 ├── git/
 │   ├── config                 # Git グローバル設定
 │   └── ignore                 # Git グローバル ignore
+├── karabiner/karabiner.json   # Karabiner-Elements キーボードカスタマイズ
 ├── ssh/config                 # SSH クライアント設定 (1Password Agent 連携)
 ├── starship/starship.toml     # Starship プロンプト設定
 ├── zsh/
 │   ├── zshenv                 # 環境変数 (全 zsh プロセスで読み込み)
 │   └── zshrc                  # インタラクティブシェル設定
+├── Brewfile                   # Homebrew パッケージ定義
 ├── install.sh                 # インストールスクリプト
 ├── .editorconfig              # エディタ共通設定
 └── .devcontainer/             # Dev Container 設定
@@ -61,8 +63,8 @@ cd ~/dotfiles
 # Homebrew のインストール (未インストールの場合)
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# ツールのインストール
-brew install antidote ghq fzf starship
+# Brewfile でツールを一括インストール
+brew bundle
 
 # git/config の user.signingkey に 1Password の SSH 公開鍵を設定
 # 1Password アプリ → SSH キー → 公開鍵をコピー
@@ -82,6 +84,7 @@ exec $SHELL -l
 | `antidote/zsh_plugins.txt` | `$XDG_CONFIG_HOME/zsh/.zsh_plugins.txt` |
 | `git/config` | `$XDG_CONFIG_HOME/git/config` |
 | `git/ignore` | `$XDG_CONFIG_HOME/git/ignore` |
+| `karabiner/karabiner.json` | `$XDG_CONFIG_HOME/karabiner/karabiner.json` |
 | `ssh/config` | `~/.ssh/config` |
 | `1password/ssh/agent.toml` | `$XDG_CONFIG_HOME/1password/ssh/agent.toml` |
 | `ghostty/config` | `$XDG_CONFIG_HOME/ghostty/config` |

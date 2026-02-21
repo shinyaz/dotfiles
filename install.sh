@@ -130,6 +130,13 @@ info "Starship 設定を配置..."
 copy_file "$DOTFILES/starship/starship.toml" "$XDG_CONFIG_HOME/starship.toml" || true
 
 # =============================================================================
+# Karabiner-Elements
+# =============================================================================
+
+info "Karabiner-Elements 設定を配置..."
+copy_file "$DOTFILES/karabiner/karabiner.json" "$XDG_CONFIG_HOME/karabiner/karabiner.json" || true
+
+# =============================================================================
 # 完了
 # =============================================================================
 
@@ -138,5 +145,5 @@ ok "インストール完了"
 echo ""
 info "次のステップ:"
 echo "  1. git/config の user.signingkey に 1Password の SSH 公開鍵を設定"
-echo "  2. brew install antidote ghq fzf starship"
+echo "  2. brew bundle でツールをインストール"
 echo "  3. exec \$SHELL -l でシェルを再読み込み"
