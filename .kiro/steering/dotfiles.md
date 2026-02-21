@@ -1,5 +1,6 @@
 ---
 inclusion: auto
+description: Coding conventions and directory structure for this dotfiles repository
 ---
 
 # dotfiles Repository Conventions
