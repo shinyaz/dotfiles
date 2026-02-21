@@ -1,21 +1,112 @@
-[core]
-	editor       = vim
-	excludesfile = ~/.config/git/ignore
-	filemode     = false
+# =============================================================================
+# User
+# =============================================================================
+
 [user]
 	name  = Shinya Tahara
 	email = shinya@fastmail.com
+	# signingkey = ssh-ed25519 AAAA... (1Password アプリから公開鍵をコピーして設定)
+
+# =============================================================================
+# Core
+# =============================================================================
+
+[core]
+	editor       = vim
+	filemode     = false
+	autocrlf     = input
+	quotepath    = false
+	pager        = less -FRX
+
 [init]
 	defaultBranch = main
-[pull]
-	rebase = false
+
 [color]
-	ui          = auto
-	status      = auto
-	diff        = auto
-	branch      = auto
-	interactive = auto
-	grep        = auto
+	ui = auto
+
+[help]
+	autocorrect = prompt
+
+# =============================================================================
+# Remote Operations
+# =============================================================================
+
+[push]
+	default         = current
+	autoSetupRemote = true
+	followTags      = true
+
+[pull]
+	rebase = true
+
+[fetch]
+	prune = true
+
+# =============================================================================
+# Diff / Merge / Rebase
+# =============================================================================
+
+[diff]
+	algorithm  = histogram
+	colorMoved = default
+	renames    = true
+
+[merge]
+	conflictstyle = zdiff3
+
+[rebase]
+	autoSquash = true
+	autoStash  = true
+
+[rerere]
+	enabled = true
+
+# =============================================================================
+# Commit / Tag Signing (1Password SSH)
+# =============================================================================
+
+[commit]
+	gpgsign = true
+	verbose = true
+
+[tag]
+	gpgsign = true
+	sort    = -version:refname
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	program = ~/.1password/op-ssh-sign
+
+# =============================================================================
+# Display
+# =============================================================================
+
+[branch]
+	sort = -committerdate
+
+[log]
+	date = iso
+
+# =============================================================================
+# Aliases
+# =============================================================================
+
+[alias]
+	st       = status -sb
+	lo       = log --oneline --graph --decorate -20
+	la       = log --oneline --graph --decorate --all -30
+	df       = diff --stat
+	last     = log -1 --stat
+	undo     = reset --soft HEAD~1
+	amend    = commit --amend --no-edit
+	wip      = !git add -A && git commit -m 'wip'
+	branches = branch -a --sort=-committerdate --format='%(committerdate:relative)%09%(refname:short)'
+
+# =============================================================================
+# Tools
+# =============================================================================
+
 [ghq]
 	root = ~/Developments/src
-

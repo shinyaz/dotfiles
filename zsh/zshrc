@@ -1,54 +1,148 @@
-# locale
-export LANGUAGE=en_US.UTF-8
-export LANG=${LANGUAGE}
-export LC_ALL=${LANGUAGE}
-export LC_TYPE=${LANGUAGE}
+# =============================================================================
+# Antidote (Plugin Manager)
+# =============================================================================
 
-# history
-HISTSIZE=10000
-SAVEHIST=10000
-HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}"/zsh/history
-setopt hist_ignore_dups
-setopt hist_ignore_all_dups
-setopt share_history
-setopt hist_no_store
-setopt hist_reduce_blanks
-setopt hist_verify
-
-# Homebrew
-if [ "$(uname)" = "Linux" ]; then
-  HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
-elif [ "$(uname -m)" = "arm64" ]; then
-  HOMEBREW_PREFIX="/opt/homebrew"
-else
-  HOMEBREW_PREFIX="/usr/local"
+# Homebrew 経由 (macOS / Linux) またはシステムインストール
+if [[ -f "${HOMEBREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh" ]]; then
+  source "${HOMEBREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh"
+elif [[ -f "${ZDOTDIR:-$HOME}/.antidote/antidote.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.antidote/antidote.zsh"
 fi
 
-[ -x "${HOMEBREW_PREFIX}"/bin/brew ] && eval "$(${HOMEBREW_PREFIX}/bin/brew shellenv)"
+if (( $+functions[antidote] )); then
+  antidote load
+fi
 
-# Starship
-[ -x "${HOMEBREW_PREFIX}"/bin/starship ] && eval "$(starship init zsh)"
+# =============================================================================
+# History
+# =============================================================================
 
-# sheldon
-[ -x "${HOMEBREW_PREFIX}"/bin/sheldon ] && eval "$(sheldon source)"
+HISTFILE=${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history
+HISTSIZE=100000
+SAVEHIST=100000
 
+setopt EXTENDED_HISTORY          # タイムスタンプ付きで履歴を保存
+setopt HIST_EXPIRE_DUPS_FIRST    # 履歴が上限に達したとき重複から削除
+setopt HIST_IGNORE_ALL_DUPS      # 重複するコマンドは古い方を削除
+setopt HIST_FIND_NO_DUPS         # 履歴検索時に重複を表示しない
+setopt HIST_IGNORE_SPACE         # スペースで始まるコマンドは履歴に残さない
+setopt HIST_REDUCE_BLANKS        # 余分な空白を削除
+setopt HIST_VERIFY               # 履歴展開後すぐに実行せず確認できるようにする
+setopt SHARE_HISTORY             # ターミナル間で履歴を共有
+setopt INC_APPEND_HISTORY        # コマンド実行時に即座に履歴に追加
+
+# =============================================================================
+# General Options
+# =============================================================================
+
+setopt AUTO_CD                   # ディレクトリ名だけで cd
+setopt AUTO_PUSHD                # cd 時に自動で pushd
+setopt PUSHD_IGNORE_DUPS         # pushd で重複を無視
+setopt PUSHD_MINUS               # +/- の意味を直感的に入れ替え
+setopt CORRECT                   # コマンドのタイポを修正提案
+setopt INTERACTIVE_COMMENTS      # インタラクティブシェルでもコメントを許可
+setopt NO_BEEP                   # ビープ音を無効化
+setopt NO_FLOW_CONTROL           # Ctrl+S/Q のフロー制御を無効化
+setopt GLOB_DOTS                 # ドットファイルもグロブの対象にする
+
+# =============================================================================
+# Completion
+# =============================================================================
+
+autoload -Uz compinit
+
+# キャッシュを使って高速化（1日1回だけ再生成）
+_zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+if [[ -n ${_zcompdump}(#qN.mh+24) ]]; then
+  compinit -d "$_zcompdump"
+else
+  compinit -C -d "$_zcompdump"
+fi
+unset _zcompdump
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'   # 大文字小文字を区別しない
+zstyle ':completion:*' menu select                      # メニュー選択を有効化
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # 補完候補に色を付ける
+zstyle ':completion:*' group-name ''                    # グループ名で分類
+zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
+zstyle ':completion:*' use-cache on                     # 補完結果をキャッシュ
+zstyle ':completion:*' cache-path ${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compcache
+
+# =============================================================================
+# Key Bindings
+# =============================================================================
+
+# Emacs 風キーバインド（個別の bindkey より先に設定すること）
+bindkey -e
+
+# history-substring-search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+
+# Option+Left/Right で単語単位のカーソル移動（macOS Terminal / iTerm2）
+bindkey '^[b' backward-word
+bindkey '^[f' forward-word
+
+# =============================================================================
 # fzf
-[ -x "${HOMEBREW_PREFIX}"/bin/fzf ] && eval "$(fzf --zsh)"
+# =============================================================================
 
-function fzf-src() {
-  local src=$(ghq list | fzf --height ${FZF_TMUX_HEIGHT:-40%} --reverse )
-  zle reset-prompt
-  if [ -n "$src" ]; then
-    BUFFER="cd $(ghq root)/$src"
-    zle accept-line
-  fi
-  zle -R -c
-}
-zle -N fzf-src
-bindkey '^]' fzf-src
+if (( $+commands[fzf] )); then
+  source <(fzf --zsh)
 
-# ssh for 1password
-# https://developer.1password.com/docs/ssh/get-started#step-4-configure-your-ssh-or-git-client
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+  export FZF_DEFAULT_OPTS='
+    --height=40%
+    --layout=reverse
+    --border
+    --info=inline
+  '
+fi
+
+# =============================================================================
+# Aliases
+# =============================================================================
+
+# --- General ---
+alias ll='ls -lAFh'
+alias la='ls -A'
+alias l='ls -CF'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias mkdir='mkdir -pv'
+alias grep='grep --color=auto'
+alias df='df -h'
+alias du='du -h'
+alias cp='cp -iv'
+alias mv='mv -iv'
+
+# --- Directory Stack (AUTO_PUSHD 活用) ---
+alias d='dirs -v | head -20'
+alias 1='cd -1'
+alias 2='cd -2'
+alias 3='cd -3'
+
+# --- Git (git/config の [alias] に無いもの) ---
+alias g='git'
+alias gco='git checkout'
+
+# --- Utility ---
+alias reload='source ${ZDOTDIR:-$HOME}/.zshrc'
+alias path='echo $PATH | tr ":" "\n"'
+
+# =============================================================================
+# Functions
+# =============================================================================
+
+# ディレクトリを作成して移動
+mkcd() { mkdir -p "$1" && cd "$1" }
+
+# =============================================================================
+# Starship Prompt
+# =============================================================================
+
+if (( $+commands[starship] )); then
+  eval "$(starship init zsh)"
 fi

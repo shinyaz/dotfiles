@@ -1,110 +1,83 @@
-# shinyaz's dotfiles
+# dotfiles
 
-## Prerequisites
+macOS / Linux 両対応の dotfiles リポジトリです。
+
+## リポジトリ構成
+
+```
+.
+├── 1Password/ssh/agent.toml   # 1Password SSH Agent 設定
+├── antidote/
+│   └── zsh_plugins.txt        # zsh プラグイン一覧 (antidote)
+├── ghostty/config             # Ghostty ターミナル設定
+├── git/
+│   ├── config                 # Git グローバル設定
+│   └── ignore                 # Git グローバル ignore
+├── ssh/config                 # SSH クライアント設定 (1Password Agent 連携)
+├── zsh/
+│   ├── zshenv                 # 環境変数 (全 zsh プロセスで読み込み)
+│   └── zshrc                  # インタラクティブシェル設定
+├── install.sh                 # インストールスクリプト
+├── .editorconfig              # エディタ共通設定
+└── .devcontainer/             # Dev Container 設定
+```
+
+## 前提条件
 
 - Git
 - Zsh
+- macOS の場合: `xcode-select --install`
 
-### MacOS
+## セットアップ
+
+### クイックインストール
 
 ```sh
-xcode-select --install
+git clone https://github.com/shinyaz/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+./install.sh
 ```
 
-## How to setup
+インストールスクリプトが以下を自動で行います:
+- XDG ディレクトリの作成
+- Zsh 設定ファイルの配置 (zshenv, zshrc, プラグイン定義)
+- Git 設定の配置
+- SSH / 1Password SSH Agent 設定の配置
+- Ghostty 設定の配置
 
-### Clone repository
+既にファイルが存在する場合はスキップされます。
 
-```sh
-export DOTFILES=path/to/dotfiles
-git clone https://github.com/shinyaz/dotfiles.git $DOTFILES
-```
-
-### Directories
-
-```sh
-# XDG Directories
-export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
-export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
-export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
-
-mkdir -p $XDG_CONFIG_HOME
-mkdir -p $XDG_CACHE_HOME
-mkdir -p $XDG_DATA_HOME
-```
-
-### Homebrew
+### インストール後の手順
 
 ```sh
-# install homebrew
+# Homebrew のインストール (未インストールの場合)
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# to add Homebrew to your PATH:
-## for MacOS
-## eval "$(/opt/homebrew/bin/brew shellenv)" 
-## for Linux
-## eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" 
+# ツールのインストール
+brew install antidote ghq fzf starship
 
-```
+# git/config の user.signingkey に 1Password の SSH 公開鍵を設定
+# 1Password アプリ → SSH キー → 公開鍵をコピー
 
-### Zsh
-
-```sh
-# create ZDOTDIR
-export ZDOTDIR=$XDG_CONFIG_HOME/zsh
-mkdir -p $ZDOTDIR
-mkdir -p ${XDG_DATA_HOME:-$HOME/.local/share}/zsh
-
-# copy config files
-cp $DOTFILES/zsh/zshenv   $HOME/.zshenv
-cp $DOTFILES/zsh/zshrc    $ZDOTDIR/.zshrc
-cp $DOTFILES/zsh/zprofile $ZDOTDIR/.zprofile
-
-# install sheldon
-brew install sheldon
-mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/sheldon
-cp $DOTFILES/sheldon/plugins.toml ${XDG_CONFIG_HOME:-$HOME/.config}/sheldon/plugins.toml
-
-# reload shell
+# シェルの再読み込み
 exec $SHELL -l
 ```
 
-### Ghostty
-```sh
-mkdir -p $XDG_CONFIG_HOME/ghostty
-cp $DOTFILES/ghostty/config $XDG_CONFIG_HOME/ghostty/config
-```
+### 手動セットアップ
 
-### Git
+インストールスクリプトを使わない場合は、各ファイルを手動でコピーしてください。配置先は以下の通りです:
 
-```sh
-mkdir -p $XDG_CONFIG_HOME/git
-cp $DOTFILES/git/config $XDG_CONFIG_HOME/git/config
-cp $DOTFILES/git/ignore $XDG_CONFIG_HOME/git/ignore
-```
+| ソース | 配置先 |
+|--------|--------|
+| `zsh/zshenv` | `~/.zshenv` |
+| `zsh/zshrc` | `$XDG_CONFIG_HOME/zsh/.zshrc` |
+| `antidote/zsh_plugins.txt` | `$XDG_CONFIG_HOME/zsh/.zsh_plugins.txt` |
+| `git/config` | `$XDG_CONFIG_HOME/git/config` |
+| `git/ignore` | `$XDG_CONFIG_HOME/git/ignore` |
+| `ssh/config` | `~/.ssh/config` |
+| `1Password/ssh/agent.toml` | `$XDG_CONFIG_HOME/1Password/ssh/agent.toml` |
+| `ghostty/config` | `$XDG_CONFIG_HOME/ghostty/config` |
 
-### SSH for 1Password (ONLY FOR MACOS USERs)
+## ライセンス
 
-```sh
-mkdir ~/.ssh
-chmod 700 ~/.ssh
-
-cp $DOTFILES/ssh/config ~/.ssh/config
-chmod 600 ~/.ssh/config
-
-mkdir -p $XDG_CONFIG_HOME/1Password/ssh
-cp $DOTFILES/1Password/ssh/agent.toml $XDG_CONFIG_HOME/1Password/ssh/agent.toml
-
-```
-
-### ghq & fzf
-
-```sh
-
-# login and ghq install
-brew install ghq
-
-# install fzf
-brew install fzf
-
-```
+MIT
