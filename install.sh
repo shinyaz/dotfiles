@@ -81,6 +81,21 @@ fi
 info "1Password SSH Agent 設定を配置..."
 copy_file "$DOTFILES/1Password/ssh/agent.toml" "$XDG_CONFIG_HOME/1Password/ssh/agent.toml" || true
 
+# op-ssh-sign を PATH の通った場所にシンボリックリンク（Git コミット署名で使用）
+info "op-ssh-sign のシンボリックリンクを作成..."
+mkdir -p "$HOME/.local/bin"
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  _1p_sign="/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+else
+  _1p_sign="/opt/1Password/op-ssh-sign"
+fi
+if [[ -x "$_1p_sign" ]]; then
+  ln -sf "$_1p_sign" "$HOME/.local/bin/op-ssh-sign"
+  ok "$HOME/.local/bin/op-ssh-sign -> $_1p_sign"
+else
+  warn "op-ssh-sign が見つかりません: $_1p_sign (1Password をインストール後に再実行してください)"
+fi
+
 # ---------------------------------------------------------------------------
 # Ghostty
 # ---------------------------------------------------------------------------

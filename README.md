@@ -43,6 +43,7 @@ cd ~/dotfiles
 - Zsh 設定ファイルの配置 (zshenv, zshrc, プラグイン定義)
 - Git 設定の配置
 - SSH / 1Password SSH Agent 設定の配置
+- `op-ssh-sign` のシンボリックリンク作成 (`~/.local/bin/` に配置、Git コミット署名で使用)
 - Ghostty 設定の配置
 
 既にファイルが存在する場合はスキップされます。

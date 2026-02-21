@@ -35,10 +35,10 @@ fi
 if [[ -S ~/.1password/agent.sock ]]; then
   export SSH_AUTH_SOCK=~/.1password/agent.sock
 fi
-# op-ssh-sign を統一パスにシンボリックリンク（git config から参照）
-if [[ -x "$_1p_sign" ]] && [[ ! -L ~/.1password/op-ssh-sign ]]; then
-  mkdir -p ~/.1password
-  ln -sf "$_1p_sign" ~/.1password/op-ssh-sign
+# op-ssh-sign を PATH の通った場所にシンボリックリンク（git config から参照）
+if [[ -x "$_1p_sign" ]] && [[ ! -L "$HOME/.local/bin/op-ssh-sign" ]]; then
+  mkdir -p "$HOME/.local/bin"
+  ln -sf "$_1p_sign" "$HOME/.local/bin/op-ssh-sign"
 fi
 unset _1p_sock _1p_sign
 

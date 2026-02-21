@@ -77,7 +77,7 @@
 	format = ssh
 
 [gpg "ssh"]
-	program = ~/.1password/op-ssh-sign
+	program = op-ssh-sign
 
 # =============================================================================
 # Display
