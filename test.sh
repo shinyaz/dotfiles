@@ -90,20 +90,6 @@ check_file_diff() {
     # Exclude entire [user] section in Git config (personal settings)
     src_content=$(sed '/^\[user\]/,/^$/d' "$src")
     dest_content=$(sed '/^\[user\]/,/^$/d' "$dest")
-  elif [[ "$exclude_pattern" == "kiro-cli" ]]; then
-    # Exclude Kiro CLI blocks (both managed and auto-injected by kiro-cli)
-    # Strip kiro-related lines + formatting-only lines (separators, blanks, if/else/fi)
-    # to avoid false negatives caused by kiro-cli auto-injection
-    _strip_kiro() {
-      grep -iv 'kiro' "$1" \
-        | grep -v '^# ===' \
-        | grep -v '^[[:space:]]*$' \
-        | grep -v '^if \[\[.*OSTYPE' \
-        | grep -v '^else$' \
-        | grep -v '^fi$'
-    }
-    src_content=$(_strip_kiro "$src")
-    dest_content=$(_strip_kiro "$dest")
   elif [[ -n "$exclude_pattern" ]]; then
     # Exclude with grep -v if pattern is specified
     src_content=$(grep -v "$exclude_pattern" "$src" 2>/dev/null || cat "$src")
@@ -148,7 +134,7 @@ check_file "$HOME/.zshenv" "zshenv"
 check_file_diff "$DOTFILES_DIR/zsh/zshenv" "$HOME/.zshenv" "zshenv"
 
 check_file "$XDG_CONFIG_HOME/zsh/.zshrc" "zshrc"
-check_file_diff "$DOTFILES_DIR/zsh/zshrc" "$XDG_CONFIG_HOME/zsh/.zshrc" "zshrc" "kiro-cli"
+check_file_diff "$DOTFILES_DIR/zsh/zshrc" "$XDG_CONFIG_HOME/zsh/.zshrc" "zshrc"
 
 check_file "$XDG_CONFIG_HOME/zsh/.zsh_plugins.txt" "zsh_plugins.txt"
 check_file_diff "$DOTFILES_DIR/antidote/zsh_plugins.txt" "$XDG_CONFIG_HOME/zsh/.zsh_plugins.txt" "zsh_plugins.txt"
@@ -218,7 +204,6 @@ check_command "git" "Git"
 check_command "ghq" "ghq"
 check_command "fzf" "fzf"
 check_command "starship" "Starship"
-check_command "kiro-cli" "Kiro CLI"
 
 # Check Antidote (via Homebrew or local)
 if [[ -f "${HOMEBREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh" ]]; then
@@ -228,19 +213,6 @@ elif [[ -f "${ZDOTDIR:-$HOME}/.antidote/antidote.zsh" ]]; then
 else
   ng "Antidote not installed"
 fi
-
-# =============================================================================
-# Kiro CLI Shell Integration
-# =============================================================================
-
-section "Kiro CLI Shell Integration"
-if [[ "$(uname -s)" == "Darwin" ]]; then
-  _kiro_shell_dir="$HOME/Library/Application Support/kiro-cli/shell"
-else
-  _kiro_shell_dir="$XDG_DATA_HOME/kiro-cli/shell"
-fi
-check_file "$_kiro_shell_dir/zshrc.pre.zsh" "Kiro CLI zshrc pre hook"
-check_file "$_kiro_shell_dir/zshrc.post.zsh" "Kiro CLI zshrc post hook"
 
 # =============================================================================
 # GUI Applications (macOS only)

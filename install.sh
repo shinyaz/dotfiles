@@ -130,27 +130,6 @@ info "Deploying Starship configuration..."
 copy_file "$DOTFILES/starship/starship.toml" "$XDG_CONFIG_HOME/starship.toml" || true
 
 # =============================================================================
-# Kiro CLI
-# =============================================================================
-
-info "Setting up Kiro CLI shell integration..."
-if command -v kiro-cli &>/dev/null; then
-  if [[ "$(uname -s)" == "Darwin" ]]; then
-    _kiro_shell="$HOME/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
-  else
-    _kiro_shell="$XDG_DATA_HOME/kiro-cli/shell/zshrc.pre.zsh"
-  fi
-  if [[ ! -f "$_kiro_shell" ]]; then
-    kiro-cli integrations install --silent dotfiles zsh
-    ok "Kiro CLI shell integration installed"
-  else
-    warn "Skipped (already exists): Kiro CLI shell integration"
-  fi
-else
-  warn "kiro-cli not found (re-run after installing Kiro CLI)"
-fi
-
-# =============================================================================
 # Karabiner-Elements
 # =============================================================================
 

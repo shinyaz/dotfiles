@@ -1,14 +1,4 @@
 # =============================================================================
-# Kiro CLI (pre block — must be at the top of this file)
-# =============================================================================
-
-if [[ "$OSTYPE" == darwin* ]]; then
-  [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
-else
-  [[ -f "${HOME}/.local/share/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/.local/share/kiro-cli/shell/zshrc.pre.zsh"
-fi
-
-# =============================================================================
 # Antidote (plugin manager)
 # =============================================================================
 
@@ -154,14 +144,4 @@ mkcd() { mkdir -p "$1" && cd "$1" }
 
 if (( $+commands[starship] )); then
   eval "$(starship init zsh)"
-fi
-
-# =============================================================================
-# Kiro CLI (post block — must be at the bottom of this file)
-# =============================================================================
-
-if [[ "$OSTYPE" == darwin* ]]; then
-  [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
-else
-  [[ -f "${HOME}/.local/share/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/.local/share/kiro-cli/shell/zshrc.post.zsh"
 fi
