@@ -57,6 +57,7 @@ The installation script automatically:
 - Deploys SSH / 1Password SSH Agent configuration
 - Creates symbolic link for `op-ssh-sign` (placed in `~/.local/bin/`, used for Git commit signing)
 - Deploys Ghostty configuration
+- Sets up Kiro CLI shell integration (if `kiro-cli` is installed)
 
 Existing files will be skipped.
 
@@ -107,8 +108,10 @@ The following items are checked:
 - SSH directory and file permissions (700/600)
 - Installation status of CLI tools
 - Installation status of GUI applications (macOS only)
+- Kiro CLI shell integration files
 - **File content diff check** - Compares files in the repository with deployed files
   - Excludes personal settings in Git config ([user] section)
+  - Excludes Kiro CLI managed blocks in zshrc
 
 ## License
 
