@@ -1,4 +1,9 @@
-# CLAUDE.md
+---
+inclusion: always
+description: Coding conventions and directory structure for this dotfiles repository
+---
+
+# dotfiles Repository Conventions
 
 Cross-platform dotfiles repo for macOS and Linux. Each directory = one tool's config.
 Files are copied to XDG-compliant paths via `install.sh`.
