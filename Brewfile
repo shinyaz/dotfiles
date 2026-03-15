@@ -21,6 +21,9 @@ brew "git"                       # Version control
 brew "ghq"                       # Repository management
 brew "fzf"                       # Fuzzy finder
 
+# --- Cloud ---
+brew "awscli"                    # AWS CLI
+
 # =============================================================================
 # GUI Applications (macOS only)
 # =============================================================================

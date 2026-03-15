@@ -179,6 +179,13 @@ check_file_diff "$DOTFILES_DIR/1password/ssh/agent.toml" "$XDG_CONFIG_HOME/1pass
 check_symlink "$HOME/.local/bin/op-ssh-sign" "op-ssh-sign"
 
 # =============================================================================
+# AWS CLI Configuration Files
+# =============================================================================
+
+section "AWS CLI Configuration Files"
+check_file "$XDG_CONFIG_HOME/aws/config" "AWS CLI config"
+
+# =============================================================================
 # Ghostty Configuration Files
 # =============================================================================
 
@@ -204,6 +211,7 @@ check_command "git" "Git"
 check_command "ghq" "ghq"
 check_command "fzf" "fzf"
 check_command "starship" "Starship"
+check_command "aws" "AWS CLI"
 
 # Check Antidote (via Homebrew or local)
 if [[ -f "${HOMEBREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh" ]]; then
