@@ -18,7 +18,6 @@ $nodejs\
 $rust\
 $golang\
 $java\
-$aws\
 $cmd_duration\
 $line_break\
 $character"""
@@ -91,15 +90,6 @@ style = "cyan"
 format = "[$symbol$version]($style) "
 symbol = " "
 style = "red"
-
-# =============================================================================
-# Cloud
-# =============================================================================
-
-[aws]
-format = '[$symbol($profile)(\($region\))]($style) '
-symbol = "☁️ "
-style = "bold orange"
 
 # =============================================================================
 # Command Duration

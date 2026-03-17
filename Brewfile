@@ -21,6 +21,9 @@ brew "git"                       # Version control
 brew "ghq"                       # Repository management
 brew "fzf"                       # Fuzzy finder
 
+# --- Languages ---
+brew "python"                    # Python runtime
+
 # --- Cloud ---
 brew "awscli"                    # AWS CLI
 

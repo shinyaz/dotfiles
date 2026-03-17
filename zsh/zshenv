@@ -23,6 +23,12 @@ elif [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
+# --- Homebrew Python ---
+
+if [[ -d "$HOMEBREW_PREFIX/opt/python/libexec/bin" ]]; then
+  export PATH="$HOMEBREW_PREFIX/opt/python/libexec/bin:$PATH"
+fi
+
 # Prioritize local tools
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -70,7 +76,7 @@ export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 
 # Configuration to use Claude Code via AWS Bedrock
 export CLAUDE_CODE_USE_BEDROCK=1
-export AWS_REGION=us-east-1              # Bedrock region
+export AWS_REGION=ap-northeast-1          # Bedrock region
 
 if [[ -f "$HOME/.env.claude" ]]; then
   source "$HOME/.env.claude"

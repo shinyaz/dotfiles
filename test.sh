@@ -211,6 +211,12 @@ check_command "git" "Git"
 check_command "ghq" "ghq"
 check_command "fzf" "fzf"
 check_command "starship" "Starship"
+if [[ -x "${HOMEBREW_PREFIX}/opt/python/libexec/bin/python" ]]; then
+  version=$("${HOMEBREW_PREFIX}/opt/python/libexec/bin/python" --version 2>/dev/null | head -1)
+  ok "Python installed: $version"
+else
+  ng "Python not installed (brew install python)"
+fi
 check_command "aws" "AWS CLI"
 
 # Check Antidote (via Homebrew or local)
