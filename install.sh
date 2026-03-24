@@ -19,7 +19,7 @@ while [[ $# -gt 0 ]]; do
       echo "Usage: ./install.sh [--force [target...]]"
       echo "  -f, --force  Overwrite existing files (all or specified targets)"
       echo ""
-      echo "Targets: zsh, git, ssh, 1password, aws, ghostty, starship, karabiner"
+      echo "Targets: zsh, git, ssh, 1password, aws, tmux, ghostty, starship, karabiner"
       echo "  e.g. ./install.sh --force zsh git"
       exit 0
       ;;
@@ -136,6 +136,13 @@ fi
 
 info "Deploying AWS CLI configuration..."
 copy_file "$DOTFILES/aws/config" "$XDG_CONFIG_HOME/aws/config" aws || true
+
+# =============================================================================
+# tmux
+# =============================================================================
+
+info "Deploying tmux configuration..."
+copy_file "$DOTFILES/tmux/tmux.conf" "$XDG_CONFIG_HOME/tmux/tmux.conf" tmux || true
 
 # =============================================================================
 # Ghostty

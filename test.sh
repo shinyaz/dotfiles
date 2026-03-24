@@ -186,6 +186,14 @@ section "AWS CLI Configuration Files"
 check_file "$XDG_CONFIG_HOME/aws/config" "AWS CLI config"
 
 # =============================================================================
+# tmux Configuration Files
+# =============================================================================
+
+section "tmux Configuration Files"
+check_file "$XDG_CONFIG_HOME/tmux/tmux.conf" "tmux config"
+check_file_diff "$DOTFILES_DIR/tmux/tmux.conf" "$XDG_CONFIG_HOME/tmux/tmux.conf" "tmux config"
+
+# =============================================================================
 # Ghostty Configuration Files
 # =============================================================================
 
@@ -207,6 +215,7 @@ check_file_diff "$DOTFILES_DIR/starship/starship.toml" "$XDG_CONFIG_HOME/starshi
 
 section "CLI Tools"
 check_command "zsh" "Zsh"
+check_command "tmux" "tmux"
 check_command "git" "Git"
 check_command "ghq" "ghq"
 check_command "fzf" "fzf"

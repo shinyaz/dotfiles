@@ -16,6 +16,9 @@ brew "zsh"                       # Zsh shell
 brew "antidote"                  # Zsh plugin manager
 brew "starship"                  # Cross-shell prompt
 
+# --- Terminal Multiplexer ---
+brew "tmux"                      # Terminal multiplexer
+
 # --- Development Tools ---
 brew "git"                       # Version control
 brew "ghq"                       # Repository management

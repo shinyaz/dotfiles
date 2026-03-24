@@ -18,6 +18,7 @@ Cross-platform dotfiles for macOS and Linux.
 ├── karabiner/karabiner.json   # Karabiner-Elements keyboard customization
 ├── ssh/config                 # SSH client configuration (1Password Agent integration)
 ├── starship/starship.toml     # Starship prompt configuration
+├── tmux/tmux.conf             # tmux terminal multiplexer configuration
 ├── zsh/
 │   ├── zshenv                 # Environment variables (loaded by all zsh processes)
 │   └── zshrc                  # Interactive shell configuration
@@ -56,6 +57,7 @@ The installation script automatically:
 - Deploys Git configuration
 - Deploys SSH / 1Password SSH Agent configuration
 - Creates symbolic link for `op-ssh-sign` (placed in `~/.local/bin/`, used for Git commit signing)
+- Deploys tmux configuration
 - Deploys Ghostty configuration
 
 Existing files will be skipped.
@@ -89,6 +91,7 @@ If you prefer not to use the installation script, manually copy each file to the
 | `git/ignore` | `$XDG_CONFIG_HOME/git/ignore` |
 | `karabiner/karabiner.json` | `$XDG_CONFIG_HOME/karabiner/karabiner.json` |
 | `ssh/config` | `~/.ssh/config` |
+| `tmux/tmux.conf` | `$XDG_CONFIG_HOME/tmux/tmux.conf` |
 | `1password/ssh/agent.toml` | `$XDG_CONFIG_HOME/1password/ssh/agent.toml` |
 | `ghostty/config` | `$XDG_CONFIG_HOME/ghostty/config` |
 | `starship/starship.toml` | `$XDG_CONFIG_HOME/starship.toml` |

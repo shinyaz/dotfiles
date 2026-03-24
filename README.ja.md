@@ -18,6 +18,7 @@ macOS / Linux 両対応の dotfiles リポジトリです。
 ├── karabiner/karabiner.json   # Karabiner-Elements キーボードカスタマイズ
 ├── ssh/config                 # SSH クライアント設定 (1Password Agent 連携)
 ├── starship/starship.toml     # Starship プロンプト設定
+├── tmux/tmux.conf             # tmux ターミナルマルチプレクサ設定
 ├── zsh/
 │   ├── zshenv                 # 環境変数 (全 zsh プロセスで読み込み)
 │   └── zshrc                  # インタラクティブシェル設定
@@ -56,6 +57,7 @@ cd ~/dotfiles
 - Git 設定の配置
 - SSH / 1Password SSH Agent 設定の配置
 - `op-ssh-sign` のシンボリックリンク作成 (`~/.local/bin/` に配置、Git コミット署名で使用)
+- tmux 設定の配置
 - Ghostty 設定の配置
 
 既にファイルが存在する場合はスキップされます。
@@ -89,6 +91,7 @@ exec $SHELL -l
 | `git/ignore` | `$XDG_CONFIG_HOME/git/ignore` |
 | `karabiner/karabiner.json` | `$XDG_CONFIG_HOME/karabiner/karabiner.json` |
 | `ssh/config` | `~/.ssh/config` |
+| `tmux/tmux.conf` | `$XDG_CONFIG_HOME/tmux/tmux.conf` |
 | `1password/ssh/agent.toml` | `$XDG_CONFIG_HOME/1password/ssh/agent.toml` |
 | `ghostty/config` | `$XDG_CONFIG_HOME/ghostty/config` |
 | `starship/starship.toml` | `$XDG_CONFIG_HOME/starship.toml` |
